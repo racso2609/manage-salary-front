@@ -1,8 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { userInterface, childrenProps } from "../../types";
 import { loginDataInterface } from "../../interfaces/auth";
-import { loginRequest } from "../../requests/auth";
+import { loginRequest, currentUserRequest } from "../../requests/auth";
 import notify from "../../utils/notify";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface authInterface {
   user?: userInterface;
@@ -21,11 +22,29 @@ export function AuthProvider(props: propsTypes) {
   const { children } = props;
   const [user, setUser] = useState<userInterface>();
   const auth = user ? true : false;
-  const setToken = (token: string) => localStorage.setItem("session", token);
-  const getToken = () => localStorage.getItem("session");
-
+  const setToken = (token: string) =>
+    AsyncStorage.setItem("session", `Bearer ${token}`);
+  const getToken = async () => AsyncStorage.getItem("session");
+  useEffect(() => {
+    currentUser();
+  }, []);
   const login = async (authData: loginDataInterface) => {
     const { data, error } = await loginRequest(authData);
+    if (data) {
+      const newUser = {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      };
+      setUser(newUser);
+    }
+    if (error)
+      notify.send({ type: "error", title: "Login Error", message: error });
+  };
+  const currentUser = async () => {
+    const token = await getToken();
+    if (!token) return;
+    const { data, error } = await currentUserRequest(token);
     if (data) {
       const newUser = {
         email: data.email,

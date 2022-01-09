@@ -1,22 +1,24 @@
 import { useState } from "react";
 
-interface propsType{
+interface propsType {
   type: string;
   default?: string;
 }
 
-export default function UseForms(props:propsType) {
+export default function UseForms(props: propsType) {
   const { type } = props;
-  const [defaultValue, setDefaultValue] = useState<string>(props.default || '');
-  const [secureTextEntry, setSecureTextEntry] = useState<boolean>(false);
-  
+  const [defaultValue, setDefaultValue] = useState<string>(props.default || "");
+  const [secureTextEntry, setSecureTextEntry] = useState<boolean>(
+    type === "password"
+  );
+
   const onChangeText = (text: string) => setDefaultValue(text);
-  const toggleSecureText = ()=>setSecureTextEntry(prev=>!prev)
+  const toggleSecureText = () => setSecureTextEntry((prev) => !prev);
   return {
     defaultValue,
     onChangeText,
     type,
     secureTextEntry,
-    toggleSecureText
+    toggleSecureText,
   };
 }

@@ -5,6 +5,7 @@ import {
   View as DefaultView,
   TouchableOpacity as DefaultTouchableOpacity,
   TextInput as DefaultTextInput,
+  Button as DefaultButton,
 } from "react-native";
 import { childrenProps } from "../types";
 
@@ -19,6 +20,11 @@ interface textInput {
 interface propsTypes extends childrenProps {
   style?: any;
   onPress?: () => void;
+}
+interface buttonTypes {
+  color?: string;
+  onPress: () => void;
+  title: string;
 }
 
 export function Text(props: propsTypes) {
@@ -84,6 +90,19 @@ export function TextInput(props: textInput) {
       onChangeText={onChangeText}
       placeholder={props.placeholder || ""}
       secureTextEntry={props?.secureTextEntry}
+    />
+  );
+}
+export function Button(props: buttonTypes) {
+  const { color, onPress, title } = props;
+  const { theme } = useContext(Themecontext);
+  const { colors } = theme;
+
+  return (
+    <DefaultButton
+      onPress={onPress}
+      title={title}
+      color={color || colors.primary}
     />
   );
 }

@@ -6,6 +6,7 @@ import {
   TouchableOpacity as DefaultTouchableOpacity,
   TextInput as DefaultTextInput,
   Button as DefaultButton,
+  ScrollView as DefaultScrollView,
 } from "react-native";
 import { childrenProps } from "../types";
 
@@ -21,18 +22,27 @@ interface propsTypes extends childrenProps {
   style?: any;
   onPress?: () => void;
 }
+
 interface buttonTypes {
   color?: string;
   onPress: () => void;
   title: string;
 }
 
-export function Text(props: propsTypes) {
-  const { children, style } = props;
+interface textTypes extends propsTypes {
+  numberOfLines?: number;
+  ellipsizeMode?: string;
+}
+
+export function Text(props: textTypes) {
+  const { children, style, numberOfLines} = props;
   const { theme } = useContext(Themecontext);
   const { colors } = theme;
   return (
-    <DefaultText style={[style, { color: colors.text }]}>
+    <DefaultText
+      numberOfLines={numberOfLines||0}
+      style={[style, { color: colors.text }]}
+    >
       {children}
     </DefaultText>
   );
@@ -40,13 +50,9 @@ export function Text(props: propsTypes) {
 
 export function View(props: propsTypes) {
   const { children, style } = props;
-  const { theme } = useContext(Themecontext);
-  const { colors } = theme;
-  return (
-    <DefaultView style={[style, { backgroundColor: colors.background }]}>
-      {children}
-    </DefaultView>
-  );
+  // const { theme } = useContext(Themecontext);
+  // const { colors } = theme;
+  return <DefaultView style={[style]}>{children}</DefaultView>;
 }
 
 export function TouchableOpacity(props: propsTypes) {
@@ -104,5 +110,25 @@ export function Button(props: buttonTypes) {
       title={title}
       color={color || colors.primary}
     />
+  );
+}
+
+interface scrollView extends propsTypes {
+  horizontal?: boolean;
+  scrollEnabled?: boolean;
+}
+export function ScrollView(props: scrollView) {
+  const { style, children, horizontal, scrollEnabled } = props;
+  // const { theme } = useContext(Themecontext);
+  // const { colors } = theme;
+
+  return (
+    <DefaultScrollView
+      horizontal={horizontal}
+      scrollEnabled={scrollEnabled}
+      contentContainerStyle={style}
+    >
+      {children}
+    </DefaultScrollView>
   );
 }

@@ -9,11 +9,14 @@ interface authInterface {
   user?: userInterface;
   auth: boolean;
   login?: (authData: loginDataInterface) => Promise<void>;
+  getToken: () => Promise<string>;
+  token: string;
 }
 interface propsTypes extends childrenProps {}
 
 const defaultValue = {
   auth: false,
+  getToken: async()=>'session'
 };
 
 const AuthContext = createContext<authInterface>(defaultValue);
@@ -22,9 +25,9 @@ export function AuthProvider(props: propsTypes) {
   const { children } = props;
   const [user, setUser] = useState<userInterface>();
   const auth = user ? true : false;
-  const setToken = (token: string) =>
-    AsyncStorage.setItem("session", `Bearer ${token}`);
-  const getToken = async () => AsyncStorage.getItem("session");
+  const setToken = async(token: string) =>
+    await AsyncStorage.setItem("session", `Bearer ${token}`);
+  const getToken = async () => await AsyncStorage.getItem("session");
   useEffect(() => {
     currentUser();
   }, []);
@@ -37,6 +40,7 @@ export function AuthProvider(props: propsTypes) {
         lastName: data.lastName,
       };
       setUser(newUser);
+      setToken(data.Token)
     }
     if (error)
       notify.send({ type: "error", title: "Login Error", message: error });
@@ -58,7 +62,7 @@ export function AuthProvider(props: propsTypes) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, auth }}>
+    <AuthContext.Provider value={{ user, login, auth, getToken }}>
       {children}
     </AuthContext.Provider>
   );

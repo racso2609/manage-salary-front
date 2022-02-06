@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { childrenProps } from "../../types";
 import { useColorScheme } from "react-native";
+// import { Header } from "./styles";
 
 interface colorInterface {
   primary: string;

@@ -13,3 +13,9 @@ export interface getEntriesResponse {
   success: boolean;
   entries: [entryInterface];
 }
+
+export interface getEntryResponse {
+  status: string;
+  success: boolean;
+  entry: entryInterface;
+}

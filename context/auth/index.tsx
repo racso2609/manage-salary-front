@@ -16,7 +16,8 @@ interface propsTypes extends childrenProps {}
 
 const defaultValue = {
   auth: false,
-  getToken: async()=>'session'
+  getToken: async()=>('session'),
+  token: ""
 };
 
 const AuthContext = createContext<authInterface>(defaultValue);
@@ -31,6 +32,7 @@ export function AuthProvider(props: propsTypes) {
   useEffect(() => {
     currentUser();
   }, []);
+
   const login = async (authData: loginDataInterface) => {
     const { data, error } = await loginRequest(authData);
     if (data) {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { loginDataResponse, loginDataInterface } from "../interfaces/auth";
-const API_URL = "http://192.168.0.107:3001";
+import { API_URL } from "../constants";
 
 export const loginRequest = async (
   dataRequest: loginDataInterface

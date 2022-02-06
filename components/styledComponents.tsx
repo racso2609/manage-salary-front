@@ -16,11 +16,13 @@ interface textInput {
   placeholder?: string;
   style?: any;
   secureTextEntry?: boolean;
+  background?: string;
 }
 
 interface propsTypes extends childrenProps {
   style?: any;
   onPress?: () => void;
+  background?: string;
 }
 
 interface buttonTypes {
@@ -35,12 +37,12 @@ interface textTypes extends propsTypes {
 }
 
 export function Text(props: textTypes) {
-  const { children, style, numberOfLines} = props;
+  const { children, style, numberOfLines } = props;
   const { theme } = useContext(Themecontext);
   const { colors } = theme;
   return (
     <DefaultText
-      numberOfLines={numberOfLines||0}
+      numberOfLines={numberOfLines || 0}
       style={[style, { color: colors.text }]}
     >
       {children}
@@ -50,9 +52,18 @@ export function Text(props: textTypes) {
 
 export function View(props: propsTypes) {
   const { children, style } = props;
-  // const { theme } = useContext(Themecontext);
-  // const { colors } = theme;
-  return <DefaultView style={[style]}>{children}</DefaultView>;
+  const { theme } = useContext(Themecontext);
+  const { colors } = theme;
+  return (
+    <DefaultView
+      style={[
+        style,
+        { backgroundColor: props?.background || colors.background },
+      ]}
+    >
+      {children}
+    </DefaultView>
+  );
 }
 
 export function TouchableOpacity(props: propsTypes) {
@@ -85,7 +96,7 @@ export function TextInput(props: textInput) {
       style={[
         props?.style,
         {
-          backgroundColor: colors.card,
+          backgroundColor: props?.background || colors?.card,
           paddingHorizontal: 10,
           height: 40,
           borderRadius: 10,

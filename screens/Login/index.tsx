@@ -5,7 +5,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Button
+  Button,
 } from "../../components/styledComponents";
 import UseForms from "../../hooks/useForms";
 import AuthContext from "../../context/auth";
@@ -15,8 +15,9 @@ export default function Login() {
   const password = UseForms({ type: "password", default: "" });
   const { login } = useContext(AuthContext);
   const handleSubmit = () => {
-    login({ email: email.defaultValue, password: password.defaultValue });
-  };
+    if (login)
+      login({ email: email.defaultValue, password: password.defaultValue });
+  }
 
   return (
     <View style={[styles.container]}>
@@ -40,10 +41,9 @@ export default function Login() {
           password
         </TouchableOpacity>
 
-        <Button title='Login' onPress={handleSubmit}/>
+        <Button title="Login" onPress={handleSubmit} />
       </View>
     </View>
-
   );
 }
 

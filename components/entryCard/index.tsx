@@ -15,8 +15,6 @@ export default function EntryCard(props: propsTypes) {
 
   const styles = StyleSheet.create({
     card: {
-      backgroundColor: colors.card,
-      color: colors.text,
       borderWidth: 1,
       borderStyle: "solid",
       borderColor: colors.border,
@@ -24,7 +22,7 @@ export default function EntryCard(props: propsTypes) {
       paddingVertical: 15,
       width: 225,
       margin: 5,
-      borderRadius: 20
+      borderRadius: 20,
     },
     dot: {
       width: 10,
@@ -33,7 +31,7 @@ export default function EntryCard(props: propsTypes) {
   });
   return (
     <View style={styles.card}>
-      <Text numberOfLines={1} >{entry.description}</Text>
+      <Text numberOfLines={1}>{entry.description}</Text>
       <Text numberOfLines={1}>{entry.amount}</Text>
       <View
         style={[

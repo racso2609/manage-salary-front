@@ -25,7 +25,7 @@ interface propsTypes extends childrenProps {
   background?: string;
 }
 
-interface buttonTypes {
+interface buttonTypes extends propsTypes {
   color?: string;
   onPress: () => void;
   title: string;
@@ -111,16 +111,18 @@ export function TextInput(props: textInput) {
   );
 }
 export function Button(props: buttonTypes) {
-  const { color, onPress, title } = props;
+  const { color, onPress, title, style } = props;
   const { theme } = useContext(Themecontext);
   const { colors } = theme;
 
   return (
+ <View style={style} >
     <DefaultButton
       onPress={onPress}
       title={title}
       color={color || colors.primary}
     />
+ </View>
   );
 }
 

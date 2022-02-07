@@ -17,6 +17,10 @@ interface textInput {
   style?: any;
   secureTextEntry?: boolean;
   background?: string;
+  multiline?: boolean;
+  numberOfLines?: number;
+  height?: number | string;
+  keyboardType?: string;
 }
 
 interface propsTypes extends childrenProps {
@@ -87,26 +91,26 @@ export function TouchableOpacity(props: propsTypes) {
 }
 
 export function TextInput(props: textInput) {
-  const { defaultValue, onChangeText } = props;
   const { theme } = useContext(Themecontext);
   const { colors } = theme;
 
   return (
     <DefaultTextInput
       style={[
-        props?.style,
         {
           backgroundColor: props?.background || colors?.card,
           paddingHorizontal: 10,
-          height: 40,
+          height: props?.height || 40,
           borderRadius: 10,
           marginVertical: 10,
         },
+        props?.style,
       ]}
-      defaultValue={defaultValue}
-      onChangeText={onChangeText}
+      // defaultValue={defaultValue}
+      // onChangeText={onChangeText}
       placeholder={props.placeholder || ""}
       secureTextEntry={props?.secureTextEntry}
+      {...props}
     />
   );
 }
@@ -116,13 +120,13 @@ export function Button(props: buttonTypes) {
   const { colors } = theme;
 
   return (
- <View style={style} >
-    <DefaultButton
-      onPress={onPress}
-      title={title}
-      color={color || colors.primary}
-    />
- </View>
+    <View style={style}>
+      <DefaultButton
+        onPress={onPress}
+        title={title}
+        color={color || colors.primary}
+      />
+    </View>
   );
 }
 

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { View, Text } from "../styledComponents";
+import { View, Text, TouchableOpacity } from "../styledComponents";
 import { entryInterface } from "../../interfaces/entries";
 import ThemeContext from "../../context/colorContext";
 
@@ -7,9 +7,10 @@ import { StyleSheet } from "react-native";
 
 interface propsTypes {
   entry: entryInterface;
+  edit: () => void;
 }
 export default function EntryCard(props: propsTypes) {
-  const { entry } = props;
+  const { entry, edit } = props;
   const { theme } = useContext(ThemeContext);
   const { colors } = theme;
 
@@ -31,6 +32,7 @@ export default function EntryCard(props: propsTypes) {
   });
   return (
     <View style={styles.card}>
+      <Text numberOfLines={1}>{entry.name}</Text>
       <Text numberOfLines={1}>{entry.description}</Text>
       <Text numberOfLines={1}>{entry.amount}</Text>
       <View
@@ -39,6 +41,7 @@ export default function EntryCard(props: propsTypes) {
           { backgroundColor: entry.active ? "green" : "red" },
         ]}
       />
+      <TouchableOpacity onPress={edit}>edit</TouchableOpacity>
     </View>
   );
 }

@@ -5,19 +5,20 @@ import {
   Button,
 } from "../../components/styledComponents";
 import { StyleSheet } from "react-native";
-import { useContext, useEffect, useState } from "react";
-import AuthContext from "../../context/auth";
+// import { useContext } from "react";
+// import AuthContext from "../../context/auth";
 import useEntries from "../../swr/useEntries";
 import EntryCard from "../../components/entryCard";
+import useToken from "../../hooks/useToken";
+import { RootStackParamList } from "../../navigation/Stack";
 
-export default function Home() {
-  const { getToken } = useContext(AuthContext);
-  const [token, setToken] = useState("");
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+type Props = NativeStackScreenProps<RootStackParamList, "Home">;
+
+export default function Home({ navigation }: Props) {
+  // const { getToken } = useContext(AuthContext);
+  const { token } = useToken();
   const { entries, isLoading, isError } = useEntries({ token });
-
-  useEffect(() => {
-    getToken().then((token) => setToken(token));
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -31,12 +32,26 @@ export default function Home() {
           <ScrollView horizontal scrollEnabled>
             {entries &&
               entries.map((entry) => {
-                return <EntryCard key={entry._id} entry={entry} />;
+                return (
+                  <EntryCard
+                    key={entry._id}
+                    edit={() => {
+                      navigation.navigate("Create", { entry: entry});
+                    }}
+                    entry={entry}
+                  />
+                );
               })}
           </ScrollView>
         </View>
       )}
-      <Button style={styles.buttonStyle} onPress={() => {}} title="hola" />
+      <Button
+        style={styles.buttonStyle}
+        onPress={() => {
+          navigation.navigate("Create", {});
+        }}
+        title="hola"
+      />
     </View>
   );
 }

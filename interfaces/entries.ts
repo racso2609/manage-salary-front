@@ -1,6 +1,7 @@
 export interface entryInterface {
   amount: number;
   description: string;
+  name: string;
   user: string;
   active: boolean;
   updateAt: Date;

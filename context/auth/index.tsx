@@ -4,20 +4,20 @@ import { loginDataInterface } from "../../interfaces/auth";
 import { loginRequest, currentUserRequest } from "../../requests/auth";
 import notify from "../../utils/notify";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import useToken from '../../hooks/useToken'
 
 interface authInterface {
   user?: userInterface;
   auth: boolean;
-  login?: (authData: loginDataInterface) => Promise<void>;
-  getToken: () => Promise<string>;
+  login: (authData: loginDataInterface) => Promise<void>;
   token: string;
 }
 interface propsTypes extends childrenProps {}
 
 const defaultValue = {
   auth: false,
-  getToken: async()=>('session'),
-  token: ""
+  token: "",
+  login: async(authData:loginDataInterface) => {console.log(authData);}
 };
 
 const AuthContext = createContext<authInterface>(defaultValue);
@@ -25,10 +25,10 @@ const AuthContext = createContext<authInterface>(defaultValue);
 export function AuthProvider(props: propsTypes) {
   const { children } = props;
   const [user, setUser] = useState<userInterface>();
-  const auth = user ? true : false;
-  const setToken = async(token: string) =>
+  const auth = user?.email ? true : false;
+  const {token} = useToken()
+  const setToken = async (token: string) =>
     await AsyncStorage.setItem("session", `Bearer ${token}`);
-  const getToken = async () => await AsyncStorage.getItem("session");
   useEffect(() => {
     currentUser();
   }, []);
@@ -42,15 +42,15 @@ export function AuthProvider(props: propsTypes) {
         lastName: data.lastName,
       };
       setUser(newUser);
-      setToken(data.Token)
+      setToken(data.Token);
     }
     if (error)
       notify.send({ type: "error", title: "Login Error", message: error });
   };
   const currentUser = async () => {
-    const token = await getToken();
     if (!token) return;
     const { data, error } = await currentUserRequest(token);
+    console.log(data)
     if (data) {
       const newUser = {
         email: data.email,
@@ -64,7 +64,7 @@ export function AuthProvider(props: propsTypes) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, auth, getToken }}>
+    <AuthContext.Provider value={{ user, login, auth,token}}>
       {children}
     </AuthContext.Provider>
   );

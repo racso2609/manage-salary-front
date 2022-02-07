@@ -4,7 +4,7 @@ import { entryInterface } from "../interfaces/entries";
 
 interface propsTypes {
   token: string;
-  entryId: string;
+  entryId?: string;
 }
 
 export default function UseEntry(props: propsTypes) {
@@ -14,7 +14,10 @@ export default function UseEntry(props: propsTypes) {
     data: entry,
     mutate: setEntry,
     error,
-  } = useSWR<entryInterface>([`/api/entries/${entryId}`, token], entryFetcher);
+  } = useSWR<entryInterface>(
+    entryId ? [`/api/entries/${entryId}`, token] : "",
+    entryFetcher
+  );
 
   // render data
   return {

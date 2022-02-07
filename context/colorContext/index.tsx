@@ -38,7 +38,7 @@ const DarkTheme = {
   dark: true,
   colors: {
     primary: "rgb(255, 45, 85)",
-    background: "rgb(0, 0, 0)",
+    background: "#282828",
     card: "rgb(255, 255, 255)",
     text: "#fff",
     border: "rgb(199, 199, 204)",

@@ -24,6 +24,7 @@ interface IupdateEntry {
   data?: {
     description: string;
     amount: string;
+    name: string;
   };
   token: string;
   entryId: string;

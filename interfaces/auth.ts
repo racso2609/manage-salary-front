@@ -1,3 +1,11 @@
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  photo: string;
+}
+
 export interface loginDataInterface {
   email: string;
   password: string;
@@ -9,4 +17,13 @@ export interface loginDataResponse {
   role: string;
   phone: string;
   Token: string;
-} 
+}
+
+export interface IRegister extends loginDataInterface {
+  firstName: string;
+  lastName: string;
+}
+
+export interface IRegisterResponse {
+  user: IUser;
+}

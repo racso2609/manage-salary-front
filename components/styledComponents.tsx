@@ -27,6 +27,7 @@ interface propsTypes extends childrenProps {
   style?: any;
   onPress?: () => void;
   background?: string;
+  styleText?: any;
 }
 
 interface buttonTypes extends propsTypes {
@@ -71,18 +72,18 @@ export function View(props: propsTypes) {
 }
 
 export function TouchableOpacity(props: propsTypes) {
-  const { children, style, onPress } = props;
+  const { children, style, onPress, styleText } = props;
   const { theme } = useContext(Themecontext);
   const { colors } = theme;
   return (
     <DefaultTouchableOpacity
       onPress={onPress}
       style={[
-        style,
         {
           color: colors.card,
           borderColor: colors.border,
         },
+        style,
       ]}
     >
       <Text>{children}</Text>
@@ -93,9 +94,13 @@ export function TouchableOpacity(props: propsTypes) {
 export function TextInput(props: textInput) {
   const { theme } = useContext(Themecontext);
   const { colors } = theme;
+  const { style } = props;
 
   return (
     <DefaultTextInput
+      placeholder={props.placeholder || ""}
+      secureTextEntry={props?.secureTextEntry}
+      {...props}
       style={[
         {
           backgroundColor: props?.background || colors?.card,
@@ -103,14 +108,10 @@ export function TextInput(props: textInput) {
           height: props?.height || 40,
           borderRadius: 10,
           marginVertical: 10,
+          flexGrow: 1,
         },
-        props?.style,
+        style,
       ]}
-      // defaultValue={defaultValue}
-      // onChangeText={onChangeText}
-      placeholder={props.placeholder || ""}
-      secureTextEntry={props?.secureTextEntry}
-      {...props}
     />
   );
 }

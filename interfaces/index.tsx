@@ -58,20 +58,12 @@ export function AuthProvider(props: propsTypes) {
       notify.send({ type: "error", title: "Login Error", message: error });
   };
   const register = async (registerData: IRegister) => {
-    const { error } = await registerRequest(registerData);
-
-    if (error)
-      notify.send({ type: "error", title: "Register Error", message: error });
-    else
-      notify.send({
-        type: "success",
-        title: "Register successfully",
-        message: "",
-      });
+    const { data, error } = await registerRequest(registerData);
   };
   const currentUser = async () => {
     if (!token) return;
     const { data, error } = await currentUserRequest(token);
+    console.log(data);
     if (data) {
       const newUser = {
         email: data.email,
@@ -85,7 +77,7 @@ export function AuthProvider(props: propsTypes) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, auth, token, register }}>
+    <AuthContext.Provider value={{ user, login, auth, token }}>
       {children}
     </AuthContext.Provider>
   );

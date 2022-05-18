@@ -8,28 +8,41 @@ import {
 } from "../../components/styledComponents";
 import UseForms from "../../hooks/useForms";
 import AuthContext from "../../context/auth";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation/Stack";
 
-type PropsType = NativeStackScreenProps<RootStackParamList, "Register">;
-
-export default function Login({ navigation }: PropsType) {
+export default function Register() {
   const email = UseForms({ type: "email", default: "" });
+  const firstName = UseForms({ type: "text", default: "" });
+  const lastName = UseForms({ type: "text", default: "" });
   const password = UseForms({ type: "password", default: "" });
-  const { login } = useContext(AuthContext);
-  const handleSubmit = () => {
-    if (login)
-      login({ email: email.defaultValue, password: password.defaultValue });
-  };
 
-  const handleRegister = () => {
-    navigation.navigate("Register");
+  const { register } = useContext(AuthContext);
+  const handleSubmit = () => {
+    if (register)
+      register({
+        email: email.defaultValue,
+        password: password.defaultValue,
+        firstName: firstName.defaultValue,
+        lastName: lastName.defaultValue,
+      });
   };
 
   return (
     <View style={[styles.container]}>
       <StatusBar hidden={true} />
       <View style={styles.form}>
+        <View style={styles.doubleForm}>
+          <TextInput
+            {...firstName}
+            placeholder="first name"
+            style={{ marginRight: 5, flexGrow: 0.9 }}
+          />
+
+          <TextInput
+            {...lastName}
+            placeholder="last name"
+            style={{ marginLeft: 5, flexGrow: 0.9 }}
+          />
+        </View>
         <TextInput
           defaultValue={email.defaultValue}
           onChangeText={email.onChangeText}
@@ -51,14 +64,7 @@ export default function Login({ navigation }: PropsType) {
           password
         </TouchableOpacity>
 
-        <Button title="Login" onPress={handleSubmit} />
-
-        <TouchableOpacity
-          onPress={handleRegister}
-          style={{ marginVertical: 10, color: "red" }}
-        >
-          Register
-        </TouchableOpacity>
+        <Button title="Register" onPress={handleSubmit} />
       </View>
     </View>
   );
@@ -76,5 +82,11 @@ const styles = StyleSheet.create({
   },
   form: {
     paddingHorizontal: 20,
+  },
+  doubleForm: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
 });

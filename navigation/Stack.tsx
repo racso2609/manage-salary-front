@@ -7,7 +7,8 @@ import { TouchableOpacity } from "../components/styledComponents";
 import Login from "../screens/Login";
 import CreateEntry from "../screens/CreateEntry";
 import HomeBottom from "./HomeBottomTab";
-import {entryInterface} from '../interfaces/entries'
+import { entryInterface } from "../interfaces/entries";
+import Register from "../screens/Register";
 
 const DefaultStack = createNativeStackNavigator();
 const Stack = DefaultStack.Navigator;
@@ -16,7 +17,8 @@ const StackScreen = DefaultStack.Screen;
 export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
-  Create: {entry?: entryInterface};
+  Register: undefined;
+  Create: { entry?: entryInterface };
 };
 
 export default function StackRoutes() {
@@ -37,11 +39,13 @@ export default function StackRoutes() {
       ),
     };
   };
-  // <StackScreen name="home" component={Home} options={options} />
   return (
-    <Stack initialRouteName="login">
+    <Stack initialRouteName="Login">
       {!auth ? (
-        <StackScreen name="login" component={Login} options={options} />
+        <>
+          <StackScreen name="Login" component={Login} options={options} />
+          <StackScreen name="Register" component={Register} options={options} />
+        </>
       ) : (
         <>
           <StackScreen name="Home" component={HomeBottom} options={options} />

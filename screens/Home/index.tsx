@@ -36,7 +36,7 @@ export default function Home({ navigation }: Props) {
                   <EntryCard
                     key={entry._id}
                     edit={() => {
-                      navigation.navigate("Create", { entry: entry});
+                      navigation.navigate("Create", { entry: entry });
                     }}
                     entry={entry}
                   />
@@ -50,7 +50,7 @@ export default function Home({ navigation }: Props) {
         onPress={() => {
           navigation.navigate("Create", {});
         }}
-        title="hola"
+        title="create entry"
       />
     </View>
   );

@@ -66,7 +66,7 @@ export function AuthProvider(props: propsTypes) {
       notify.send({
         type: "success",
         title: "Register successfully",
-        message: "",
+        message: "wii",
       });
   };
   const currentUser = async () => {

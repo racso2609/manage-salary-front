@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { FC, useContext } from "react";
 import Themecontext from "../context/colorContext";
 import {
   Text as DefaultText,
@@ -39,21 +39,30 @@ interface buttonTypes extends propsTypes {
 interface textTypes extends propsTypes {
   numberOfLines?: number;
   ellipsizeMode?: string;
+  color?: string;
 }
 
-export function Text(props: textTypes) {
-  const { children, style, numberOfLines } = props;
+export const Text: React.FC<textTypes> = (props) => {
+  const { children, style, numberOfLines, color } = props;
   const { theme } = useContext(Themecontext);
   const { colors } = theme;
+  const possibleColor = Object.keys(colors);
+  const textColor =
+    color && possibleColor.includes(color)
+      ? //@ts-ignore
+        colors[color]
+      : color
+      ? color
+      : colors.text;
   return (
     <DefaultText
       numberOfLines={numberOfLines || 0}
-      style={[style, { color: colors.text }]}
+      style={[style, { color: textColor }]}
     >
-      {children}
+      {children?.toString()}
     </DefaultText>
   );
-}
+};
 
 export function View(props: propsTypes) {
   const { children, style } = props;
@@ -86,7 +95,7 @@ export function TouchableOpacity(props: propsTypes) {
         style,
       ]}
     >
-      <Text>{children}</Text>
+      <Text {...styleText}>{children}</Text>
     </DefaultTouchableOpacity>
   );
 }

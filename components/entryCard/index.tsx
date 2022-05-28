@@ -29,6 +29,10 @@ export default function EntryCard(props: propsTypes) {
       width: 10,
       height: 10,
     },
+    cardOption: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
   });
   return (
     <View style={styles.card}>
@@ -41,7 +45,15 @@ export default function EntryCard(props: propsTypes) {
           { backgroundColor: entry.active ? "green" : "red" },
         ]}
       />
-      <TouchableOpacity onPress={edit}>edit</TouchableOpacity>
+      <View style={[styles.cardOption]}>
+        <TouchableOpacity styleText={{ color: "blue" }} onPress={edit}>
+          edit
+        </TouchableOpacity>
+
+        <TouchableOpacity styleText={{ color: "red" }} onPress={edit}>
+          delete
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

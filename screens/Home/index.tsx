@@ -5,9 +5,8 @@ import {
   Button,
 } from "../../components/styledComponents";
 import { StyleSheet } from "react-native";
-// import { useContext } from "react";
-// import AuthContext from "../../context/auth";
 import useEntries from "../../swr/useEntries";
+import useExpenses from "../../swr/useExpenses";
 import EntryCard from "../../components/entryCard";
 import useToken from "../../hooks/useToken";
 import { RootStackParamList } from "../../navigation/Stack";
@@ -18,13 +17,22 @@ type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 export default function Home({ navigation }: Props) {
   // const { getToken } = useContext(AuthContext);
   const { token } = useToken();
-  const { entries, isLoading, isError } = useEntries({ token });
+  const {
+    entries,
+    isLoading: isLoadingEntries,
+    isError: isErrorEntries,
+  } = useEntries({ token });
+  const {
+    expenses,
+    isLoading: isLoadingExpenses,
+    isError: isErrorExpenses,
+  } = useExpenses({ token });
 
   return (
     <View style={styles.container}>
-      {isLoading ? (
+      {isLoadingEntries ? (
         <Text>...Loading</Text>
-      ) : isError ? (
+      ) : isErrorEntries ? (
         <Text>Error</Text>
       ) : (
         <View style={styles.scrollSection}>
@@ -32,6 +40,29 @@ export default function Home({ navigation }: Props) {
           <ScrollView horizontal scrollEnabled>
             {entries &&
               entries.map((entry) => {
+                return (
+                  <EntryCard
+                    key={entry._id}
+                    edit={() => {
+                      navigation.navigate("Create", { entry: entry });
+                    }}
+                    entry={entry}
+                  />
+                );
+              })}
+          </ScrollView>
+        </View>
+      )}
+      {isLoadingExpenses ? (
+        <Text>...Loading</Text>
+      ) : isErrorExpenses ? (
+        <Text>Error</Text>
+      ) : (
+        <View style={styles.scrollSection}>
+          <Text style={styles.title}>Expenses</Text>
+          <ScrollView horizontal scrollEnabled>
+            {expenses &&
+              expenses.map((entry) => {
                 return (
                   <EntryCard
                     key={entry._id}

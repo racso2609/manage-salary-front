@@ -7,23 +7,23 @@ interface propsTypes {
   expenseId?: string;
 }
 
-export default function UseEntry(props: propsTypes) {
+export default function Useexpense(props: propsTypes) {
   const { token, expenseId } = props;
 
   const {
-    data: entry,
-    mutate: setEntry,
+    data: expense,
+    mutate: setExpense,
     error,
   } = useSWR<expenseInterface>(
-    expenseId ? [`/api/expense/${expenseId}`, token] : "",
+    expenseId ? [`/api/expenses/${expenseId}`, token] : "",
     expenseFetcher
   );
 
   // render data
   return {
-    entry,
-    setEntry,
+    expense,
+    setExpense,
     isError: error,
-    isLoading: !error && !entry,
+    isLoading: !error && !expense,
   };
 }

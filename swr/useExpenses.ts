@@ -10,18 +10,18 @@ export default function UseEntry(props: propsTypes) {
   const { token } = props;
 
   const {
-    data: entries,
-    mutate: setEntries,
+    data: expenses,
+    mutate: setExpenses,
     error,
-  } = useSWR<expenseInterface[]>(["/api/entries/", token], expensesFetcher, {
+  } = useSWR<expenseInterface[]>(["/api/expenses/", token], expensesFetcher, {
     refreshInterval: 10000,
   });
 
   // render data
   return {
-    entries,
-    setEntries,
+    expenses,
+    setExpenses,
     isError: error,
-    isLoading: !error && !entries,
+    isLoading: !error && !expenses,
   };
 }

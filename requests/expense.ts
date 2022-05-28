@@ -12,7 +12,7 @@ export const expensesFetcher = async (url: string, token: string) => {
     `${API_URL}${url}`,
     { headers: { Authorization: token } }
   );
-  return data.expenses;
+  return data.expends;
 };
 
 export const expenseFetcher = async (url: string, token: string) => {
@@ -35,10 +35,10 @@ interface IupdateExpense {
 export const updateExpense = async ({
   data,
   token,
-  entryId,
+  expenseId,
 }: IupdateExpense): Promise<void> => {
   try {
-    await axios.put(`${API_URL}/api/entries/${entryId}`, data, {
+    await axios.put(`${API_URL}/api/expenses/${expenseId}`, data, {
       headers: { Authorization: token },
     });
   } catch (error) {
@@ -55,27 +55,13 @@ export const createExpense = async ({
   token,
 }: IupdateExpense): Promise<void> => {
   try {
-    await axios.post(`${API_URL}/api/entries`, data, {
+    await axios.post(`${API_URL}/api/expenses`, data, {
       headers: { Authorization: token },
     });
   } catch (error) {
     notify.send({
       type: "error",
       title: "error creating entry",
-      message: error.message,
-    });
-  }
-};
-
-export const toggleActiveEntry = async ({ entryId, token }: IupdateExpense) => {
-  try {
-    await axios.patch(`${API_URL}/api/entries/${entryId}`, null, {
-      headers: { Authorization: token },
-    });
-  } catch (error) {
-    notify.send({
-      type: "error",
-      title: "error toggle entry",
       message: error.message,
     });
   }

@@ -12,7 +12,7 @@ export interface expenseInterface {
 export interface getExpensesResponse {
   status: string;
   success: boolean;
-  expenses: [expenseInterface];
+  expends: [expenseInterface];
 }
 
 export interface getExpenseResponse {

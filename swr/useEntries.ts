@@ -13,9 +13,7 @@ export default function UseEntry(props: propsTypes) {
     data: entries,
     mutate: setEntries,
     error,
-  } = useSWR<entryInterface[]>(["/api/entries/", token], entriesFetcher, {
-    refreshInterval: 10000,
-  });
+  } = useSWR<entryInterface[]>(["/api/entries/", token], entriesFetcher, {});
 
   // render data
   return {

@@ -4,7 +4,6 @@ import { categoryInterface } from "../interfaces/categories";
 
 interface propsTypes {
   token: string;
-  expenseId?: string;
 }
 
 export default function UseCategories(props: propsTypes) {

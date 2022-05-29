@@ -49,7 +49,7 @@ export default function StackRoutes() {
     };
   };
   return (
-    <Stack initialRouteName="Login">
+    <Stack initialRouteName={auth ? "Login" : "Home"}>
       {!auth ? (
         <>
           <StackScreen name="Login" component={Login} options={options} />

@@ -13,7 +13,7 @@ import { createExpense, updateExpense } from "../../requests/expense";
 import { RootStackParamList, createType } from "../../navigation/Stack";
 
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import SelectInput from "../../components/SelectInput";
+import CategorySelect from "../../components/CategorySelect";
 type Props = NativeStackScreenProps<RootStackParamList, "Create">;
 
 export default function ({ route }: Props) {
@@ -27,6 +27,12 @@ export default function ({ route }: Props) {
   } = useCategories({ token });
 
   const editableObject = entry || expense;
+
+  const category = UseForms({
+    type: "text",
+    default:
+      type === createType.ENTRY ? "" : editableObject?.category?.toString(),
+  });
 
   const amount = UseForms({
     type: "text",
@@ -70,7 +76,7 @@ export default function ({ route }: Props) {
         {type === createType.EXPENSE && (
           <>
             <Text>Categories</Text>
-            <SelectInput {...name} />
+            <CategorySelect value={category} />
           </>
         )}
       </View>

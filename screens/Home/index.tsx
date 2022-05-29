@@ -12,6 +12,7 @@ import useToken from "../../hooks/useToken";
 import { RootStackParamList, createType } from "../../navigation/Stack";
 
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import ExpenseCard from "../../components/expenseCard";
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 export default function Home({ navigation }: Props) {
@@ -43,7 +44,11 @@ export default function Home({ navigation }: Props) {
                   <EntryCard
                     key={entry._id}
                     edit={() => {
-                      navigation.navigate("Create", { entry: entry });
+                      navigation.navigate("Create", {
+                        entry: entry,
+
+                        type: createType.ENTRY,
+                      });
                     }}
                     entry={entry}
                   />
@@ -60,19 +65,20 @@ export default function Home({ navigation }: Props) {
         <View style={styles.scrollSection}>
           <Text style={styles.title}>Expenses</Text>
           <ScrollView horizontal scrollEnabled>
-            {!expenses.lenght ? (
+            {!expenses?.length ? (
               <Text>Not expenses</Text>
             ) : (
-              expenses.map((entry) => {
+              expenses.map((expense) => {
                 return (
-                  <EntryCard
-                    key={entry._id}
+                  <ExpenseCard
+                    key={expense._id}
                     edit={() => {
                       navigation.navigate("Create", {
                         expense: expense,
+                        type: createType.EXPENSE,
                       });
                     }}
-                    entry={entry}
+                    expense={expense}
                   />
                 );
               })

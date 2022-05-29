@@ -1,9 +1,8 @@
 export interface expenseInterface {
   amount: number;
   description: string;
-  name: string;
+  category: string;
   user: string;
-  active: boolean;
   updateAt: Date;
   createdAt: Date;
   _id: string;

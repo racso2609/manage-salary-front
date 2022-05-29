@@ -9,12 +9,13 @@ import useEntries from "../../swr/useEntries";
 import useExpenses from "../../swr/useExpenses";
 import EntryCard from "../../components/entryCard";
 import useToken from "../../hooks/useToken";
-import { RootStackParamList, createType } from "../../navigation/Stack";
+import { RootStackParamList } from "../../navigation/Stack";
 
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 export default function Home({ navigation }: Props) {
+  // const { getToken } = useContext(AuthContext);
   const { token } = useToken();
   const {
     entries,
@@ -86,14 +87,6 @@ export default function Home({ navigation }: Props) {
           navigation.navigate("Create", { type: createType.ENTRY });
         }}
         title="create entry"
-      />
-
-      <Button
-        style={styles.buttonStyle}
-        onPress={() => {
-          navigation.navigate("Create", { type: createType.EXPENSE });
-        }}
-        title="create expenses"
       />
     </View>
   );

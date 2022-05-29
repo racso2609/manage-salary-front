@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { MutableRefObject, useContext, useEffect, useRef } from "react";
 import Themecontext from "../context/colorContext";
 import {
   Text as DefaultText,
@@ -7,6 +7,10 @@ import {
   TextInput as DefaultTextInput,
   Button as DefaultButton,
   ScrollView as DefaultScrollView,
+  NativeSyntheticEvent,
+  TextInputFocusEventData,
+  KeyboardTypeOptions,
+  TextInput as Input,
 } from "react-native";
 import { childrenProps } from "../types";
 
@@ -20,7 +24,9 @@ interface textInput {
   multiline?: boolean;
   numberOfLines?: number;
   height?: number | string;
-  keyboardType?: string;
+  keyboardType?: KeyboardTypeOptions;
+  onFocus?: (a: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onBlur?: (a: NativeSyntheticEvent<TextInputFocusEventData>) => void;
 }
 
 interface propsTypes extends childrenProps {
@@ -59,7 +65,7 @@ export const Text: React.FC<textTypes> = (props) => {
       numberOfLines={numberOfLines || 0}
       style={[style, { color: textColor }]}
     >
-      {children?.toString()}
+      {children}
     </DefaultText>
   );
 };
@@ -103,18 +109,37 @@ export function TouchableOpacity(props: propsTypes) {
 export function TextInput(props: textInput) {
   const { theme } = useContext(Themecontext);
   const { colors } = theme;
-  const { style } = props;
+  const {
+    style,
+    defaultValue,
+    onChangeText,
+    placeholder,
+    secureTextEntry,
+    background,
+    multiline,
+    numberOfLines,
+    height,
+    keyboardType,
+    onFocus,
+    onBlur,
+  } = props;
 
   return (
     <DefaultTextInput
-      placeholder={props.placeholder || ""}
-      secureTextEntry={props?.secureTextEntry}
-      {...props}
+      placeholder={placeholder || ""}
+      secureTextEntry={secureTextEntry}
+      defaultValue={defaultValue}
+      onChangeText={onChangeText}
+      multiline={multiline}
+      numberOfLines={numberOfLines}
+      keyboardType={keyboardType}
+      onFocus={onFocus}
+      onBlur={onBlur}
       style={[
         {
-          backgroundColor: props?.background || colors?.card,
+          backgroundColor: background || colors?.card,
           paddingHorizontal: 10,
-          height: props?.height || 40,
+          height: height || 40,
           borderRadius: 10,
           marginVertical: 10,
           flexGrow: 1,

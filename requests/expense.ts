@@ -30,12 +30,12 @@ interface IupdateExpense {
     name: string;
   };
   token: string;
-  entryId: string;
+  id: string;
 }
 export const updateExpense = async ({
   data,
   token,
-  expenseId,
+  id: expenseId,
 }: IupdateExpense): Promise<void> => {
   try {
     await axios.put(`${API_URL}/api/expenses/${expenseId}`, data, {

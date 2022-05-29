@@ -7,17 +7,24 @@ import {
 import { StyleSheet } from "react-native";
 import UseForms from "../../hooks/useForms";
 import useToken from "../../hooks/useToken";
+import useCategories from "../../swr/useCategories";
 import { createEntry, updateEntries } from "../../requests/entries";
-import { createExpense, updateExpenses } from "../../requests/expense";
+import { createExpense, updateExpense } from "../../requests/expense";
 import { RootStackParamList, createType } from "../../navigation/Stack";
 
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import SelectInput from "../../components/SelectInput";
 type Props = NativeStackScreenProps<RootStackParamList, "Create">;
 
 export default function ({ route }: Props) {
   const { params } = route;
   const { entry, expense, type } = params;
   const { token } = useToken();
+  const {
+    categories,
+    // isLoading: isLoadingCategories,
+    // isError: isErrorCategories,
+  } = useCategories({ token });
 
   const editableObject = entry || expense;
 
@@ -29,10 +36,13 @@ export default function ({ route }: Props) {
     type: "text",
     default: editableObject?.description,
   });
-  const name = UseForms({ type: "text", default: editableObject?.name });
+  const name = UseForms({
+    type: "text",
+    default: type === createType.ENTRY ? entry?.name : "",
+  });
 
   const create = type === createType.ENTRY ? createEntry : createExpense;
-  const update = type === createType.ENTRY ? updateEntries : updateExpenses;
+  const update = type === createType.ENTRY ? updateEntries : updateExpense;
 
   const onSubmit = async () => {
     const data = {
@@ -40,8 +50,8 @@ export default function ({ route }: Props) {
       description: description.defaultValue,
       name: name.defaultValue,
     };
-    if (!editableObject?._id) await create({ data, token, entryId: "" });
-    else await update({ data, token, editableObjectId: entry._id });
+    if (!editableObject?._id) await create({ data, token, id: "" });
+    else await update({ data, token, id: editableObject._id });
   };
   return (
     <View style={styles.form}>
@@ -59,8 +69,8 @@ export default function ({ route }: Props) {
         <TextInput height={70} multiline {...description} />
         {type === createType.EXPENSE && (
           <>
-            <Text>Category</Text>
-            <TextInput {...name} />
+            <Text>Categories</Text>
+            <SelectInput {...name} />
           </>
         )}
       </View>

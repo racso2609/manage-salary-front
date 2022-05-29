@@ -7,7 +7,7 @@ interface propsTypes {
   expenseId?: string;
 }
 
-export default function Useexpense(props: propsTypes) {
+export default function UseExpense(props: propsTypes) {
   const { token, expenseId } = props;
 
   const {

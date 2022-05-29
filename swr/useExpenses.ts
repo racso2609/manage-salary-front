@@ -6,7 +6,7 @@ interface propsTypes {
   token: string;
 }
 
-export default function UseEntry(props: propsTypes) {
+export default function UseExpenses(props: propsTypes) {
   const { token } = props;
 
   const {

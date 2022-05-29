@@ -27,12 +27,12 @@ interface IupdateEntry {
     name: string;
   };
   token: string;
-  entryId: string;
+  id: string;
 }
 export const updateEntries = async ({
   data,
   token,
-  entryId,
+  id: entryId,
 }: IupdateEntry): Promise<void> => {
   try {
     await axios.put(`${API_URL}/api/entries/${entryId}`, data, {
@@ -59,20 +59,6 @@ export const createEntry = async ({
     notify.send({
       type: "error",
       title: "error creating entry",
-      message: error.message,
-    });
-  }
-};
-
-export const toggleActiveEntry = async ({ entryId, token }: IupdateEntry) => {
-  try {
-    await axios.patch(`${API_URL}/api/entries/${entryId}`, null, {
-      headers: { Authorization: token },
-    });
-  } catch (error) {
-    notify.send({
-      type: "error",
-      title: "error toggle entry",
       message: error.message,
     });
   }

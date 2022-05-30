@@ -10,6 +10,7 @@ interface colorInterface {
   border: string;
   notification: string;
   background: string;
+  active: string;
 }
 interface themeInterface {
   dark: boolean;
@@ -31,6 +32,7 @@ const DefaultTheme = {
     text: "#000",
     border: "rgb(199, 199, 204)",
     notification: "rgb(255, 69, 58)",
+    active: "purple",
   },
 };
 
@@ -43,6 +45,7 @@ const DarkTheme = {
     text: "#fff",
     border: "rgb(199, 199, 204)",
     notification: "rgb(255, 69, 58)",
+    active: "purple",
   },
 };
 

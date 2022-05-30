@@ -35,6 +35,9 @@ interface propsTypes extends childrenProps {
   background?: string;
   styleText?: any;
 }
+interface touchableType extends propsTypes {
+  isContainer?: boolean;
+}
 
 interface buttonTypes extends propsTypes {
   color?: string;
@@ -86,8 +89,8 @@ export function View(props: propsTypes) {
   );
 }
 
-export function TouchableOpacity(props: propsTypes) {
-  const { children, style, onPress, styleText } = props;
+export function TouchableOpacity(props: touchableType) {
+  const { children, style, onPress, styleText, isContainer } = props;
   const { theme } = useContext(ThemeContext);
   const { colors } = theme;
   return (
@@ -101,7 +104,7 @@ export function TouchableOpacity(props: propsTypes) {
         style,
       ]}
     >
-      <Text {...styleText}>{children}</Text>
+      {!isContainer ? <Text {...styleText}>{children}</Text> : children}
     </DefaultTouchableOpacity>
   );
 }

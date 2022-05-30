@@ -10,6 +10,8 @@ import HomeBottom from "./HomeBottomTab";
 import { entryInterface } from "../interfaces/entries";
 import { expenseInterface } from "../interfaces/expenses";
 import Register from "../screens/Register";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 
 const DefaultStack = createNativeStackNavigator();
 const Stack = DefaultStack.Navigator;
@@ -41,9 +43,14 @@ export default function StackRoutes() {
         backgroundColor: colors.background,
         color: colors.text,
       },
+      title: "Manage Salary",
       headerRight: () => (
         <TouchableOpacity onPress={() => toggleMode()}>
-          {darkMode ? "dark" : "light"}
+          {darkMode ? (
+            <FontAwesomeIcon icon={faSun} color={colors.primary} size={25} />
+          ) : (
+            <FontAwesomeIcon icon={faMoon} color={colors.primary} size={25} />
+          )}
         </TouchableOpacity>
       ),
     };

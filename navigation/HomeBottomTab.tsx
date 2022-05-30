@@ -6,7 +6,9 @@ import Home from "../screens/Home";
 // import { TouchableOpacity } from "../components/styledComponents";
 // import AuthContext from "../context/auth";
 import ThemeContext from "../context/colorContext";
+import Expense from "../screens/ExpenseSection";
 const Tab = createBottomTabNavigator();
+const Navigator = Tab.Navigator;
 
 // <Tab.Screen name="Settings" component={SettingsScreen} />
 // type propsType = {};
@@ -27,8 +29,9 @@ export default function TabNavigator() {
   };
 
   return (
-    <Tab.Navigator screenOptions={options}>
+    <Navigator screenOptions={options}>
       <Tab.Screen name="Info" component={Home} />
-    </Tab.Navigator>
+      <Tab.Screen name="Expense" component={Expense} />
+    </Navigator>
   );
 }

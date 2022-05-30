@@ -4,10 +4,10 @@ import UseForms from "../../hooks/useForms";
 import useToken from "../../hooks/useToken";
 import UseCategories from "../../swr/useCategories";
 import { childrenProps } from "../../types";
-import { TouchableOpacity } from "../styledComponents";
 import { categoryInterface } from "../../interfaces/categories";
 import { StyleSheet, View } from "react-native";
 import ThemeContext from "../../context/colorContext";
+import { Text, TouchableOpacity } from "../styledComponents";
 interface propsTypes extends childrenProps {
   value: {
     defaultValue: string;
@@ -32,16 +32,14 @@ const CategorySelect: FC<propsTypes> = ({ value }) => {
       backgroundColor: colors.card,
       paddingHorizontal: 5,
       paddingVertical: 10,
-      zIndex: 9999,
     },
     listItem: {
       paddingVertical: 5,
-      zIndex: 9999,
     },
   });
 
   return (
-    <View style={{ backgroundColor: "red", zIndex: -1 }}>
+    <View>
       <SelectInput internalValue={internalValue} show={showPanel}>
         <View style={[styles.list]}>
           {categories &&
@@ -54,7 +52,7 @@ const CategorySelect: FC<propsTypes> = ({ value }) => {
                     onHandleSelect(category);
                   }}
                 >
-                  {category.name}
+                  <Text>{category.name}</Text>
                 </TouchableOpacity>
               );
             })}

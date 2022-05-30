@@ -31,12 +31,11 @@ const SelectInput: FC<propsTypes> = ({ internalValue, children, show }) => {
 const styles = StyleSheet.create({
   container: {
     position: "relative",
+    height: "auto",
   },
   list: {
-    position: "absolute",
-    top: "90%",
-    minHeight: 5,
-    minWidth: "100%",
+    width: "100%",
+    height: "100%",
   },
 });
 

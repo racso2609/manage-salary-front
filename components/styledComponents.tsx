@@ -1,17 +1,17 @@
 import { MutableRefObject, useContext, useEffect, useRef } from "react";
-import Themecontext from "../context/colorContext";
+import ThemeContext from "../context/colorContext";
 import {
   Text as DefaultText,
   View as DefaultView,
-  TouchableOpacity as DefaultTouchableOpacity,
   TextInput as DefaultTextInput,
   Button as DefaultButton,
   ScrollView as DefaultScrollView,
   NativeSyntheticEvent,
   TextInputFocusEventData,
   KeyboardTypeOptions,
-  TextInput as Input,
+  TouchableOpacity as DefaultTouchableOpacity,
 } from "react-native";
+
 import { childrenProps } from "../types";
 
 interface textInput {
@@ -50,7 +50,7 @@ interface textTypes extends propsTypes {
 
 export const Text: React.FC<textTypes> = (props) => {
   const { children, style, numberOfLines, color } = props;
-  const { theme } = useContext(Themecontext);
+  const { theme } = useContext(ThemeContext);
   const { colors } = theme;
   const possibleColor = Object.keys(colors);
   const textColor =
@@ -72,7 +72,7 @@ export const Text: React.FC<textTypes> = (props) => {
 
 export function View(props: propsTypes) {
   const { children, style } = props;
-  const { theme } = useContext(Themecontext);
+  const { theme } = useContext(ThemeContext);
   const { colors } = theme;
   return (
     <DefaultView
@@ -88,7 +88,7 @@ export function View(props: propsTypes) {
 
 export function TouchableOpacity(props: propsTypes) {
   const { children, style, onPress, styleText } = props;
-  const { theme } = useContext(Themecontext);
+  const { theme } = useContext(ThemeContext);
   const { colors } = theme;
   return (
     <DefaultTouchableOpacity
@@ -107,7 +107,7 @@ export function TouchableOpacity(props: propsTypes) {
 }
 
 export function TextInput(props: textInput) {
-  const { theme } = useContext(Themecontext);
+  const { theme } = useContext(ThemeContext);
   const { colors } = theme;
   const {
     style,
@@ -151,7 +151,7 @@ export function TextInput(props: textInput) {
 }
 export function Button(props: buttonTypes) {
   const { color, onPress, title, style } = props;
-  const { theme } = useContext(Themecontext);
+  const { theme } = useContext(ThemeContext);
   const { colors } = theme;
 
   return (
@@ -171,7 +171,7 @@ interface scrollView extends propsTypes {
 }
 export function ScrollView(props: scrollView) {
   const { style, children, horizontal, scrollEnabled } = props;
-  // const { theme } = useContext(Themecontext);
+  // const { theme } = useContext(ThemeContext);
   // const { colors } = theme;
 
   return (

@@ -1,31 +1,34 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { FC } from "react";
 import { StyleSheet } from "react-native";
-import ExpenseCard from "../../components/expenseCard";
+import EntryCard from "../../components/entryCard";
 import { ScrollView, Text, View } from "../../components/styledComponents";
 import useToken from "../../hooks/useToken";
 import { createType, RootStackParamList } from "../../navigation/Stack";
-import UseExpenses from "../../swr/useExpenses";
+import UseEntries from "../../swr/useEntries";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
-const Expense: FC<Props> = ({ navigation }) => {
+const Entries: FC<Props> = ({ navigation }) => {
   const { token } = useToken();
-  const { expenses, isLoading, isError } = UseExpenses({ token });
+  const { entries, isLoading, isError } = UseEntries({ token });
 
   return (
     <View style={[styles.container]}>
       <Text style={[styles.title]}>Expense Summary</Text>
-      <ScrollView scrollEnabled>
+      <ScrollView
+        scrollEnabled
+        style={[{ justifyContent: "center", alignItems: "center" }]}
+      >
         {isLoading && <Text>...Loading</Text>}
         {isError && <Text>...Error</Text>}
-        {expenses?.map((expense) => {
+        {entries?.map((entry) => {
           return (
-            <ExpenseCard
-              expense={expense}
-              key={expense._id}
+            <EntryCard
+              entry={entry}
+              key={entry._id}
               edit={() => {
                 navigation.navigate("Create", {
-                  expense: expense,
+                  entry,
                   type: createType.EXPENSE,
                 });
               }}
@@ -41,6 +44,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,
@@ -48,4 +52,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Expense;
+export default Entries;

@@ -1,6 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { FC } from "react";
 import { StyleSheet } from "react-native";
+import CategoryTag from "../../components/CategoryTag";
 import ExpenseCard from "../../components/expenseCard";
 import {
   Button,
@@ -11,15 +12,22 @@ import {
 import useToken from "../../hooks/useToken";
 import { createType, RootStackParamList } from "../../navigation/Stack";
 import { deleteExpense } from "../../requests/expense";
+import UseCategories from "../../swr/useCategories";
 import UseExpenses from "../../swr/useExpenses";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 const Expense: FC<Props> = ({ navigation }) => {
   const { token } = useToken();
   const { expenses, isLoading, isError } = UseExpenses({ token });
+  const { categories } = UseCategories({ token });
 
   return (
     <View style={[styles.container]}>
+      <ScrollView scrollEnabled horizontal style={[{ marginVertical: 10 }]}>
+        {categories?.map((category) => {
+          return <CategoryTag category={category} />;
+        })}
+      </ScrollView>
       <ScrollView scrollEnabled style={[styles.scrollView]}>
         {isLoading && <Text>...Loading</Text>}
         {isError && <Text>...Error</Text>}

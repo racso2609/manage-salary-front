@@ -49,13 +49,31 @@ export const updateExpense = async ({
     });
   }
 };
-
 export const createExpense = async ({
   data,
   token,
 }: IupdateExpense): Promise<void> => {
   try {
     await axios.post(`${API_URL}/api/expenses`, data, {
+      headers: { Authorization: token },
+    });
+  } catch (error) {
+    notify.send({
+      type: "error",
+      title: "error creating entry",
+      message: error.message,
+    });
+  }
+};
+export const deleteExpense = async ({
+  expenseId,
+  token,
+}: {
+  expenseId: string;
+  token: string;
+}): Promise<void> => {
+  try {
+    await axios.delete(`${API_URL}/api/expenses/${expenseId}`, {
       headers: { Authorization: token },
     });
   } catch (error) {

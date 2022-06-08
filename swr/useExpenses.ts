@@ -13,11 +13,9 @@ export default function UseExpenses(props: propsTypes) {
     data: expenses,
     mutate: setExpenses,
     error,
-  } = useSWR<expenseInterface[]>(
-    ["/api/expenses/", token],
-    expensesFetcher,
-    {}
-  );
+  } = useSWR<expenseInterface[]>(["/api/expenses/", token], expensesFetcher, {
+    refreshInterval: 30 * 1000,
+  });
 
   // render data
   return {

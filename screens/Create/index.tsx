@@ -55,6 +55,7 @@ export default function ({ route }: Props) {
       amount: amount.defaultValue,
       description: description.defaultValue,
       name: name.defaultValue,
+      category: category.defaultValue,
     };
     if (!editableObject?._id) await create({ data, token, id: "" });
     else await update({ data, token, id: editableObject._id });

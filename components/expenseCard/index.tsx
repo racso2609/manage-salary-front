@@ -4,14 +4,18 @@ import ThemeContext from "../../context/colorContext";
 
 import { StyleSheet } from "react-native";
 import { expenseInterface } from "../../interfaces/expenses";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 interface propsTypes {
   expense: expenseInterface;
   edit: () => void;
   width?: string | number;
+  onDelete?: () => void;
+  showIcons?: boolean;
 }
 export default function ExpenseCard(props: propsTypes) {
-  const { expense, edit } = props;
+  const { expense, edit, showIcons, onDelete } = props;
   const { theme } = useContext(ThemeContext);
   const { colors } = theme;
 
@@ -45,15 +49,17 @@ export default function ExpenseCard(props: propsTypes) {
           // { backgroundColor: entry.active ? "green" : "red" },
         ]}
       />
-      <View style={[styles.cardOption]}>
-        <TouchableOpacity styleText={{ color: "blue" }} onPress={edit}>
-          edit
-        </TouchableOpacity>
+      {showIcons && (
+        <View style={[styles.cardOption]}>
+          <TouchableOpacity onPress={edit}>
+            <FontAwesomeIcon icon={faPencil} color="blue" />
+          </TouchableOpacity>
 
-        <TouchableOpacity styleText={{ color: "red" }} onPress={edit}>
-          delete
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity onPress={onDelete}>
+            <FontAwesomeIcon icon={faTrash} color={colors.primary} />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }

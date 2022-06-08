@@ -19,12 +19,7 @@ const Entries: FC<Props> = ({ navigation }) => {
 
   return (
     <View style={[styles.container]}>
-      <ScrollView
-        scrollEnabled
-        style={[
-          { justifyContent: "center", alignItems: "center", width: "100%" },
-        ]}
-      >
+      <ScrollView scrollEnabled style={[styles.scrollView]}>
         {isLoading && <Text>...Loading</Text>}
         {isError && <Text>...Error</Text>}
         {entries?.map((entry) => {
@@ -33,6 +28,7 @@ const Entries: FC<Props> = ({ navigation }) => {
               <EntryCard
                 entry={entry}
                 width="100%"
+                showIcons
                 edit={() => {
                   navigation.navigate("Create", {
                     entry,
@@ -44,13 +40,15 @@ const Entries: FC<Props> = ({ navigation }) => {
           );
         })}
       </ScrollView>
-      <Button
-        style={styles.buttonStyle}
-        onPress={() => {
-          navigation.navigate("Create", { type: createType.ENTRY });
-        }}
-        title="create entry"
-      />
+      <View style={[styles.buttonContainer]}>
+        <Button
+          style={styles.buttonStyle}
+          onPress={() => {
+            navigation.navigate("Create", { type: createType.ENTRY });
+          }}
+          title="create entry"
+        />
+      </View>
     </View>
   );
 };
@@ -60,8 +58,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 10,
     paddingHorizontal: 10,
-    // justifyContent: "center",
-    // alignItems: "center",
     width: "100%",
   },
   title: {
@@ -76,10 +72,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: "hidden",
   },
-
+  buttonContainer: {
+    width: "100%",
+    alignItems: "center",
+  },
   cardItem: {
     marginVertical: 10,
-    width: "100%",
+    width: "90%",
+  },
+  scrollView: {
+    alignItems: "center",
   },
 });
 

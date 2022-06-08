@@ -15,7 +15,10 @@ export default function UseCategories(props: propsTypes) {
     error,
   } = useSWR<categoryInterface[]>(
     [`/api/categories`, token],
-    categoriesFetcher
+    categoriesFetcher,
+    {
+      refreshInterval: 30 * 1000,
+    }
   );
 
   return {

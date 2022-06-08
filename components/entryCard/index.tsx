@@ -4,14 +4,17 @@ import { entryInterface } from "../../interfaces/entries";
 import ThemeContext from "../../context/colorContext";
 
 import { StyleSheet } from "react-native";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 interface propsTypes {
   entry: entryInterface;
   edit: () => void;
   width?: string | number;
+  showIcons?: boolean;
 }
 export default function EntryCard(props: propsTypes) {
-  const { entry, edit } = props;
+  const { entry, edit, showIcons } = props;
   const { theme } = useContext(ThemeContext);
   const { colors } = theme;
 
@@ -46,15 +49,18 @@ export default function EntryCard(props: propsTypes) {
           { backgroundColor: entry.active ? "green" : "red" },
         ]}
       />
-      <View style={[styles.cardOption]}>
-        <TouchableOpacity styleText={{ color: "blue" }} onPress={edit}>
-          edit
-        </TouchableOpacity>
 
-        <TouchableOpacity styleText={{ color: "red" }} onPress={edit}>
-          delete
-        </TouchableOpacity>
-      </View>
+      {showIcons && (
+        <View style={[styles.cardOption]}>
+          <TouchableOpacity onPress={edit}>
+            <FontAwesomeIcon icon={faPencil} color="blue" />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={edit}>
+            <FontAwesomeIcon icon={faTrash} color={colors.primary} />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }

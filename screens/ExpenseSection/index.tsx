@@ -10,6 +10,7 @@ import {
 } from "../../components/styledComponents";
 import useToken from "../../hooks/useToken";
 import { createType, RootStackParamList } from "../../navigation/Stack";
+import { deleteExpense } from "../../requests/expense";
 import UseExpenses from "../../swr/useExpenses";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
@@ -19,10 +20,7 @@ const Expense: FC<Props> = ({ navigation }) => {
 
   return (
     <View style={[styles.container]}>
-      <ScrollView
-        scrollEnabled
-        style={[{ justifyContent: "center", alignItems: "center" }]}
-      >
+      <ScrollView scrollEnabled style={[styles.scrollView]}>
         {isLoading && <Text>...Loading</Text>}
         {isError && <Text>...Error</Text>}
         {expenses?.map((expense) => {
@@ -30,7 +28,11 @@ const Expense: FC<Props> = ({ navigation }) => {
             <View key={expense._id} style={[styles.cardItem]}>
               <ExpenseCard
                 width="100%"
+                showIcons
                 expense={expense}
+                onDelete={() => {
+                  deleteExpense({ expenseId: expense._id, token: token });
+                }}
                 edit={() => {
                   navigation.navigate("Create", {
                     expense: expense,
@@ -42,13 +44,15 @@ const Expense: FC<Props> = ({ navigation }) => {
           );
         })}
       </ScrollView>
-      <Button
-        style={styles.buttonStyle}
-        onPress={() => {
-          navigation.navigate("Create", { type: createType.EXPENSE });
-        }}
-        title="create expenses"
-      />
+      <View style={[styles.buttonContainer]}>
+        <Button
+          style={styles.buttonStyle}
+          onPress={() => {
+            navigation.navigate("Create", { type: createType.EXPENSE });
+          }}
+          title="create expenses"
+        />
+      </View>
     </View>
   );
 };
@@ -58,8 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 10,
     paddingHorizontal: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    width: "100%",
   },
   title: {
     fontSize: 20,
@@ -75,6 +78,14 @@ const styles = StyleSheet.create({
   },
   cardItem: {
     marginVertical: 10,
+    width: "90%",
+  },
+  buttonContainer: {
+    width: "100%",
+    alignItems: "center",
+  },
+  scrollView: {
+    alignItems: "center",
   },
 });
 

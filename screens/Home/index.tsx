@@ -8,6 +8,9 @@ import { RootStackParamList, createType } from "../../navigation/Stack";
 
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import ExpenseCard from "../../components/expenseCard";
+import UseTotal from "../../swr/useTotal";
+import { TotalHeader } from "./TotalHeader";
+
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 export default function Home({ navigation }: Props) {
@@ -22,10 +25,13 @@ export default function Home({ navigation }: Props) {
     isLoading: isLoadingExpenses,
     isError: isErrorExpenses,
   } = useExpenses({ token });
+  const { total } = UseTotal({ token });
+  console.log(total);
 
   return (
     <View style={styles.container}>
-      <View></View>
+      <TotalHeader total={total} />
+
       {isLoadingEntries ? (
         <Text>...Loading</Text>
       ) : isErrorEntries ? (

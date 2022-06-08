@@ -8,6 +8,7 @@ import { expenseInterface } from "../../interfaces/expenses";
 interface propsTypes {
   expense: expenseInterface;
   edit: () => void;
+  width?: string | number;
 }
 export default function ExpenseCard(props: propsTypes) {
   const { expense, edit } = props;
@@ -35,7 +36,7 @@ export default function ExpenseCard(props: propsTypes) {
     },
   });
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { width: props.width }]}>
       <Text numberOfLines={1}>{expense.description}</Text>
       <Text numberOfLines={1}>{expense.amount}</Text>
       <View

@@ -8,6 +8,7 @@ import { StyleSheet } from "react-native";
 interface propsTypes {
   entry: entryInterface;
   edit: () => void;
+  width?: string | number;
 }
 export default function EntryCard(props: propsTypes) {
   const { entry, edit } = props;
@@ -35,7 +36,7 @@ export default function EntryCard(props: propsTypes) {
     },
   });
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { width: props.width }]}>
       <Text numberOfLines={1}>{entry.name}</Text>
       <Text numberOfLines={1}>{entry.description}</Text>
       <Text numberOfLines={1}>{entry.amount}</Text>

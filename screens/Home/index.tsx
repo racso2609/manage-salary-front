@@ -1,9 +1,4 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  Button,
-} from "../../components/styledComponents";
+import { View, Text, ScrollView } from "../../components/styledComponents";
 import { StyleSheet } from "react-native";
 import useEntries from "../../swr/useEntries";
 import useExpenses from "../../swr/useExpenses";
@@ -86,21 +81,6 @@ export default function Home({ navigation }: Props) {
           </ScrollView>
         </View>
       )}
-      <Button
-        style={styles.buttonStyle}
-        onPress={() => {
-          navigation.navigate("Create", { type: createType.ENTRY });
-        }}
-        title="create entry"
-      />
-
-      <Button
-        style={styles.buttonStyle}
-        onPress={() => {
-          navigation.navigate("Create", { type: createType.EXPENSE });
-        }}
-        title="create expenses"
-      />
     </View>
   );
 }
@@ -120,11 +100,5 @@ const styles = StyleSheet.create({
   title: {
     margin: 10,
     width: "100%",
-  },
-  buttonStyle: {
-    width: "90%",
-    marginBottom: 20,
-    borderRadius: 10,
-    overflow: "hidden",
   },
 });

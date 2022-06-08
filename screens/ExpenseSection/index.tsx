@@ -47,7 +47,7 @@ const Expense: FC<Props> = ({ navigation }) => {
       <ScrollView
         scrollEnabled
         horizontal
-        style={[{ marginVertical: 10, height: 40 }]}
+        style={[{ marginVertical: 10, height: 30 }]}
       >
         {categories?.map((category) => {
           return (
@@ -68,7 +68,7 @@ const Expense: FC<Props> = ({ navigation }) => {
         <CategoryTag
           category={{ _id: "1", name: "+" }}
           fontSize="15"
-          color="lightblue"
+          color="purple"
         />
       </ScrollView>
       <ScrollView scrollEnabled style={[styles.scrollView]}>

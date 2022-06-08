@@ -67,7 +67,7 @@ export const Text: React.FC<textTypes> = (props) => {
   return (
     <DefaultText
       numberOfLines={numberOfLines || 0}
-      style={[style, { color: textColor }]}
+      style={[{ color: textColor }, style]}
     >
       {children}
     </DefaultText>

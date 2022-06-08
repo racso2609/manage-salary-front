@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { categoriesFetcher } from "../requests/categories";
 import { categoryInterface } from "../interfaces/categories";
+import { LONG } from "../utils/time";
 
 interface propsTypes {
   token: string;
@@ -17,7 +18,7 @@ export default function UseCategories(props: propsTypes) {
     [`/api/categories`, token],
     categoriesFetcher,
     {
-      refreshInterval: 30 * 1000,
+      refreshInterval: LONG,
     }
   );
 

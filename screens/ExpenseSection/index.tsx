@@ -25,7 +25,7 @@ const Expense: FC<Props> = ({ navigation }) => {
         {isError && <Text>...Error</Text>}
         {expenses?.map((expense) => {
           return (
-            <View key={expense._id} style={[styles.cardItem]}>
+            <View key={expense?._id} style={[styles.cardItem]}>
               <ExpenseCard
                 width="100%"
                 showIcons

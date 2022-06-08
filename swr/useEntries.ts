@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { entriesFetcher } from "../requests/entries";
 import { entryInterface } from "../interfaces/entries";
+import { SHORT } from "../utils/time";
 
 interface propsTypes {
   token: string;
@@ -14,7 +15,7 @@ export default function UseEntry(props: propsTypes) {
     mutate: setEntries,
     error,
   } = useSWR<entryInterface[]>(["/api/entries/", token], entriesFetcher, {
-    refreshInterval: 30 * 1000,
+    refreshInterval: SHORT,
   });
 
   // render data

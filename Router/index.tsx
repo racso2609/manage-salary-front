@@ -1,15 +1,16 @@
-import StackRoutes from "../navigation/Stack";
 import { NavigationContainer } from "@react-navigation/native";
+import StackRoutes from "../navigation/Stack";
 import React, { useContext } from "react";
 import ThemeContext from "../context/colorContext";
-import Toast from "react-native-toast-message";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 export default function () {
   const { theme } = useContext(ThemeContext);
   return (
-    <NavigationContainer theme={theme}>
-      <StackRoutes />
-      <Toast />
-    </NavigationContainer>
+    <RootSiblingParent>
+      <NavigationContainer theme={theme}>
+        <StackRoutes />
+      </NavigationContainer>
+    </RootSiblingParent>
   );
 }

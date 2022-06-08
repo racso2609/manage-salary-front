@@ -63,3 +63,28 @@ export const createEntry = async ({
     });
   }
 };
+export const deleteEntry = async ({
+  entryId,
+  token,
+}: {
+  entryId: string;
+  token: string;
+}): Promise<void> => {
+  try {
+    await axios.delete(`${API_URL}/api/entries/${entryId}`, {
+      headers: { Authorization: token },
+    });
+
+    notify.send({
+      type: "success",
+      title: "Entry deleted",
+      message: "",
+    });
+  } catch (error) {
+    notify.send({
+      type: "error",
+      title: "error deleting entry",
+      message: error.message,
+    });
+  }
+};

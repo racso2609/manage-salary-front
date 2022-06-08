@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { expensesFetcher } from "../requests/expense";
 import { expenseInterface } from "../interfaces/expenses";
+import { SHORT } from "../utils/time";
 
 interface propsTypes {
   token: string;
@@ -14,7 +15,7 @@ export default function UseExpenses(props: propsTypes) {
     mutate: setExpenses,
     error,
   } = useSWR<expenseInterface[]>(["/api/expenses/", token], expensesFetcher, {
-    refreshInterval: 30 * 1000,
+    refreshInterval: SHORT,
   });
 
   // render data

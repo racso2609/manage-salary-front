@@ -1,4 +1,5 @@
-import Toast from "react-native-toast-message";
+import Toast from "react-native-root-toast";
+
 interface notifyInterface {
   type: string;
   message?: string;
@@ -6,10 +7,12 @@ interface notifyInterface {
 }
 
 const send = (notification: notifyInterface) => {
-  Toast.show({
-    type: notification.type,
-    text1: notification.title,
-    text2: notification.message || "",
+  const message = notification.message ? notification.message : "";
+  console.log(message);
+  Toast.show(notification.title, {
+    duration: Toast.durations.SHORT,
+    backgroundColor: notification.type === "success" ? "lightgreen" : "red",
+    textColor: notification.type === "success" ? "black" : "light",
   });
 };
 const notify = { send };

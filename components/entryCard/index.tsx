@@ -25,7 +25,7 @@ export default function EntryCard(props: propsTypes) {
       borderColor: colors.border,
       paddingHorizontal: 20,
       paddingVertical: 15,
-      width: 225,
+      minWidth: 225,
       margin: 5,
       borderRadius: 20,
     },
@@ -36,6 +36,7 @@ export default function EntryCard(props: propsTypes) {
     cardOption: {
       flexDirection: "row",
       justifyContent: "space-between",
+      marginTop: 15,
     },
   });
   return (
@@ -43,13 +44,6 @@ export default function EntryCard(props: propsTypes) {
       <Text numberOfLines={1}>{entry.name}</Text>
       <Text numberOfLines={1}>{entry.description}</Text>
       <Text numberOfLines={1}>{entry.amount}</Text>
-      <View
-        style={[
-          styles.dot,
-          { backgroundColor: entry.active ? "green" : "red" },
-        ]}
-      />
-
       {showIcons && (
         <View style={[styles.cardOption]}>
           <TouchableOpacity onPress={edit}>

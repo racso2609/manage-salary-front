@@ -22,7 +22,12 @@ const SelectInput: FC<propsTypes> = ({ internalValue, children, show }) => {
 
   return (
     <View style={[styles.container]}>
-      <TextInput onFocus={onFocus} onBlur={onBlur} {...internalValue} />
+      <TextInput
+        disabled={true}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        {...internalValue}
+      />
       {showPanel && <View style={[styles.list]}>{children}</View>}
     </View>
   );

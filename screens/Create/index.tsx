@@ -31,7 +31,11 @@ export default function ({ route }: Props) {
   const category = UseForms({
     type: "text",
     default:
-      type === createType.ENTRY ? "" : editableObject?.category?.toString(),
+      //@ts-ignore
+      type === createType.ENTRY || !editableObject?.category
+        ? ""
+        : //@ts-ignore
+          editableObject.category,
   });
 
   const amount = UseForms({
@@ -77,7 +81,16 @@ export default function ({ route }: Props) {
         {type === createType.EXPENSE && (
           <>
             <Text>Categories</Text>
-            <CategorySelect value={category} />
+            <CategorySelect
+              value={category}
+              categoryName={
+                categories?.find(
+                  (categoryF) =>
+                    categoryF._id.toString() ===
+                    category.defaultValue.toString()
+                )?.name
+              }
+            />
           </>
         )}
       </View>

@@ -26,7 +26,7 @@ export default function ExpenseCard(props: propsTypes) {
       borderColor: colors.border,
       paddingHorizontal: 20,
       paddingVertical: 15,
-      width: 225,
+      minWidth: 225,
       margin: 5,
       borderRadius: 20,
     },
@@ -37,18 +37,14 @@ export default function ExpenseCard(props: propsTypes) {
     cardOption: {
       flexDirection: "row",
       justifyContent: "space-between",
+      marginTop: 15,
     },
   });
   return (
     <View style={[styles.card, { width: props.width }]}>
       <Text numberOfLines={1}>{expense.description}</Text>
       <Text numberOfLines={1}>{expense.amount}</Text>
-      <View
-        style={[
-          styles.dot,
-          // { backgroundColor: entry.active ? "green" : "red" },
-        ]}
-      />
+
       {showIcons && (
         <View style={[styles.cardOption]}>
           <TouchableOpacity onPress={edit}>

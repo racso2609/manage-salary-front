@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { StyleSheet } from "react-native";
 import CategoryTag from "../../components/CategoryTag";
 import ExpenseCard from "../../components/expenseCard";
@@ -7,9 +7,12 @@ import {
   Button,
   ScrollView,
   Text,
+  TouchableOpacity,
   View,
 } from "../../components/styledComponents";
 import useToken from "../../hooks/useToken";
+import { categoryInterface } from "../../interfaces/categories";
+import { expenseInterface } from "../../interfaces/expenses";
 import { createType, RootStackParamList } from "../../navigation/Stack";
 import { deleteExpense } from "../../requests/expense";
 import UseCategories from "../../swr/useCategories";
@@ -20,18 +23,58 @@ const Expense: FC<Props> = ({ navigation }) => {
   const { token } = useToken();
   const { expenses, isLoading, isError } = UseExpenses({ token });
   const { categories } = UseCategories({ token });
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+  const onSelectCategory = (categoryId: string) => {
+    let categoriesSelected = selectedCategories;
+    const category = selectedCategories?.find((cate) => cate === categoryId);
+    if (category)
+      categoriesSelected = categoriesSelected.filter(
+        (cat) => cat !== categoryId
+      );
+    else categoriesSelected = [...categoriesSelected, categoryId];
+
+    setSelectedCategories(categoriesSelected);
+  };
+  const categoriesFilter = (expense: expenseInterface) => {
+    if (!selectedCategories.length) return true;
+
+    return selectedCategories.includes(expense.category);
+  };
 
   return (
     <View style={[styles.container]}>
-      <ScrollView scrollEnabled horizontal style={[{ marginVertical: 10 }]}>
+      <ScrollView
+        scrollEnabled
+        horizontal
+        style={[{ marginVertical: 10, height: 40 }]}
+      >
         {categories?.map((category) => {
-          return <CategoryTag category={category} />;
+          return (
+            category.name && (
+              <TouchableOpacity
+                onPress={() => onSelectCategory(category._id)}
+                style={[{ marginHorizontal: 10 }]}
+                key={category?._id}
+              >
+                <CategoryTag
+                  category={category}
+                  active={selectedCategories.includes(category._id)}
+                />
+              </TouchableOpacity>
+            )
+          );
         })}
+        <CategoryTag
+          category={{ _id: "1", name: "+" }}
+          fontSize="15"
+          color="lightblue"
+        />
       </ScrollView>
       <ScrollView scrollEnabled style={[styles.scrollView]}>
         {isLoading && <Text>...Loading</Text>}
         {isError && <Text>...Error</Text>}
-        {expenses?.map((expense) => {
+        {expenses?.filter(categoriesFilter)?.map((expense) => {
           return (
             <View key={expense?._id} style={[styles.cardItem]}>
               <ExpenseCard

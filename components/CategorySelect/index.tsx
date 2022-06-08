@@ -13,17 +13,17 @@ interface propsTypes extends childrenProps {
     defaultValue: string;
     onChangeText: (a: string) => void;
   };
+  categoryName?: string;
 }
 
-const CategorySelect: FC<propsTypes> = ({ value }) => {
+const CategorySelect: FC<propsTypes> = ({ value, categoryName }) => {
   const { token } = useToken();
   const { theme } = useContext(ThemeContext);
   const { colors } = theme;
-  const internalValue = UseForms({ type: "text" });
+  const internalValue = UseForms({ type: "text", default: categoryName });
   const { categories } = UseCategories({ token });
   const showPanel = categories && categories?.length > 0 ? true : false;
   const onHandleSelect = (category: categoryInterface) => {
-    console.log("press");
     value.onChangeText(category._id);
     internalValue.onChangeText(category.name);
   };

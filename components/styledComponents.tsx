@@ -27,6 +27,7 @@ interface textInput {
   keyboardType?: KeyboardTypeOptions;
   onFocus?: (a: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   onBlur?: (a: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  disabled?: boolean;
 }
 
 interface propsTypes extends childrenProps {
@@ -80,8 +81,8 @@ export function View(props: propsTypes) {
   return (
     <DefaultView
       style={[
-        style,
         { backgroundColor: props?.background || colors.background },
+        style,
       ]}
     >
       {children}
@@ -125,6 +126,7 @@ export function TextInput(props: textInput) {
     keyboardType,
     onFocus,
     onBlur,
+    disabled,
   } = props;
 
   return (
@@ -138,6 +140,7 @@ export function TextInput(props: textInput) {
       keyboardType={keyboardType}
       onFocus={onFocus}
       onBlur={onBlur}
+      editable={!disabled}
       style={[
         {
           backgroundColor: background || colors?.card,

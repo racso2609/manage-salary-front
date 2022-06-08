@@ -8,7 +8,6 @@ interface notifyInterface {
 
 const send = (notification: notifyInterface) => {
   const message = notification.message ? notification.message : "";
-  console.log(message);
   Toast.show(notification.title, {
     duration: Toast.durations.SHORT,
     backgroundColor: notification.type === "success" ? "lightgreen" : "red",

@@ -26,7 +26,6 @@ export default function Home({ navigation }: Props) {
     isError: isErrorExpenses,
   } = useExpenses({ token });
   const { total } = UseTotal({ token });
-  console.log(total);
 
   return (
     <View style={styles.container}>

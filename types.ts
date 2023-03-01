@@ -1,11 +1,11 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export interface childrenProps {
-  children?: ReactNode;
+    children?: ReactNode;
 }
 
 export interface userInterface {
-  email: string;
-  firstName: string;
-  lastName: string;
+    email: string;
+    firstName: string;
+    lastName: string;
 }

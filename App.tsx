@@ -1,9 +1,9 @@
-import Theme from "./ThemeController";
-import Router from "./Router";
+import Theme from './ThemeController';
+import Router from './Router';
 export default function App() {
-  return (
-    <Theme>
-      <Router />
-    </Theme>
-  );
+    return (
+        <Theme>
+            <Router />
+        </Theme>
+    );
 }

@@ -1,5 +1,5 @@
 export interface totalData {
-  totalExpenses: number;
-  totalEntries: number;
-  total: number;
+    totalExpenses: number;
+    totalEntries: number;
+    total: number;
 }

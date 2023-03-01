@@ -1,10 +1,10 @@
 export interface categoryInterface {
-  name: string;
-  _id: string;
+    name: string;
+    _id: string;
 }
 
 export interface getCategoriesResponse {
-  status: string;
-  success: boolean;
-  categories: [categoryInterface];
+    status: string;
+    success: boolean;
+    categories: [categoryInterface];
 }

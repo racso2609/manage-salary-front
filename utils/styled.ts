@@ -6,6 +6,8 @@ export const properties: any = {
     position: 'position',
     fontSize: 'font-size',
     display: 'display',
+    border: 'border',
+  flex: 'flex',
 
     alignItems: 'align-items',
     justifyContent: 'justify-content',

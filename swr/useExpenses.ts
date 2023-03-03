@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { expensesFetcher } from '../requests/expense';
 import { expenseInterface } from '../interfaces/expenses';
-import { SHORT } from '../utils/time';
+import { SHORT } from '../constants/time';
 
 interface propsTypes {
     token: string;

@@ -18,8 +18,6 @@ interface propsTypes extends childrenProps {
 
 const CategorySelect: FC<propsTypes> = ({ value, categoryName }) => {
     const { token } = useToken();
-    const { theme } = useContext(ThemeContext);
-    const { colors } = theme;
     const internalValue = UseForms({ type: 'text', default: categoryName });
     const { categories } = UseCategories({ token });
     const showPanel = categories && categories?.length > 0 ? true : false;
@@ -29,7 +27,6 @@ const CategorySelect: FC<propsTypes> = ({ value, categoryName }) => {
     };
     const styles = StyleSheet.create({
         list: {
-            backgroundColor: colors.card,
             paddingHorizontal: 5,
             paddingVertical: 10,
         },

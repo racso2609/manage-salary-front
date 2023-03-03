@@ -6,15 +6,19 @@ export interface ContainerProps extends GeneralProps {
     alignItems: string;
     justifyContent: string;
     direction: string;
+    border: string;
+    flex: number;
 }
 
 type ContainerType = Partial<ContainerProps>;
 
 export const View = styled.View<ContainerType>`
     display: flex;
+background-color: ${(props:any) => props.theme.bg};
     ${(props: any) => addStyles(props)}
 `;
 
 export const ScrollView = styled.ScrollView<ContainerType>`
+background-color: ${(props:any) => props.theme.bg};
     ${(props: any) => addStyles(props)}
 `;

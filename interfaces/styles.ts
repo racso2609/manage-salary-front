@@ -8,4 +8,5 @@ export interface GeneralProps {
     width: string;
     fontSize: string;
     display: string;
+    direction: string;
 }

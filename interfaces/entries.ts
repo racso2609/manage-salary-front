@@ -1,3 +1,4 @@
+
 export interface entryInterface {
     amount: number;
     description: string;

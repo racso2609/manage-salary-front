@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { entriesFetcher } from '../requests/entries';
 import { entryInterface } from '../interfaces/entries';
-import { SHORT } from '../utils/time';
+import { SHORT } from '../constants/time';
 
 interface propsTypes {
     token: string;

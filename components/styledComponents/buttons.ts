@@ -15,7 +15,7 @@ export const Button = styled.Button<Partial<ButtonProps>>`
     color: ${(props: any) => props.theme.fg};
     ${(props: any) => addStyles(props)};
 `;
-export const TouchableOpacity = styled.Touchableopacity<Partial<ButtonProps>>`
+export const TouchableOpacity = styled.TouchableOpacity<Partial<ButtonProps>>`
     all: unset;
     cursor: pointer;
     padding: 5px 30px;

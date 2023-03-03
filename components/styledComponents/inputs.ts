@@ -4,5 +4,6 @@ import { addStyles } from '../../utils/styled';
 
 type TextInputProps = GeneralProps;
 export const TextInput = styled.TextInput<TextInputProps>`
+    color: ${(props: any) => props.theme.fg};
     ${(props: any) => addStyles(props)};
 `;

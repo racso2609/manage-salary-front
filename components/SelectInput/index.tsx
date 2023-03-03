@@ -1,7 +1,8 @@
 import React, { FC, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { childrenProps } from '../../types';
-import { TextInput } from '../styledComponents';
+import { TextInput, View, Text } from '../styledComponents';
+
 interface propsTypes extends childrenProps {
     show: boolean;
     internalValue: {
@@ -21,9 +22,13 @@ const SelectInput: FC<propsTypes> = ({ internalValue, children, show }) => {
     const showPanel = isFocus && show;
 
     return (
-        <View style={[styles.container]}>
+        <View >
             <TextInput onFocus={onFocus} onBlur={onBlur} {...internalValue} />
-            {showPanel && <View style={[styles.list]}>{children}</View>}
+            {showPanel && (
+                <View>
+                    <Text>{children}</Text>
+                </View>
+            )}
         </View>
     );
 };

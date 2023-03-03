@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { totalData } from '../interfaces/total';
 import { totalFetcher } from '../requests/total';
-import { SHORT } from '../utils/time';
+import { SHORT } from '../constants/time';
 
 interface propsTypes {
     token: string;

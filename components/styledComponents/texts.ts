@@ -6,7 +6,7 @@ export interface TextProps {
     fontSize: string;
     weight: string;
 }
-export const Text = styled.span<Partial<TextProps>>`
+export const Text = styled.Text<Partial<TextProps>>`
     color: ${(props: any) => props.theme.fg};
     ${(props: any) => addStyles(props)};
 `;

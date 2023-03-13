@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { View, Text, TouchableOpacity } from '../styledComponents';
 import { entryInterface } from '../../interfaces/entries';
 
@@ -23,13 +22,15 @@ export default function EntryCard(props: propsTypes) {
             {showIcons && (
                 <View style={[styles.cardOption]}>
                     <TouchableOpacity onPress={edit}>
-                        <FontAwesomeIcon icon={faPencil} color="blue" />
+                        <Text>
+                            <FontAwesomeIcon icon={faPencil} color="blue" />
+                        </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={edit}>
-                        <FontAwesomeIcon
-                            icon={faTrash}
-                        />
+                        <Text>
+                            <FontAwesomeIcon icon={faTrash} />
+                        </Text>
                     </TouchableOpacity>
                 </View>
             )}

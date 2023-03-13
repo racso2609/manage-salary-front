@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import SelectInput from '../SelectInput';
 import UseForms from '../../hooks/useForms';
 import useToken from '../../hooks/useToken';
@@ -6,7 +6,6 @@ import UseCategories from '../../swr/useCategories';
 import { childrenProps } from '../../types';
 import { categoryInterface } from '../../interfaces/categories';
 import { StyleSheet, View } from 'react-native';
-import ThemeContext from '../../context/colorContext';
 import { Text, TouchableOpacity } from '../styledComponents';
 interface propsTypes extends childrenProps {
     value: {
@@ -50,7 +49,7 @@ const CategorySelect: FC<propsTypes> = ({ value, categoryName }) => {
                                     }}
                                 >
                                     <Text>{category.name}</Text>
-                                </TouchableOpacity>
+                                  </TouchableOpacity>
                             );
                         })}
                 </View>

@@ -15,12 +15,9 @@ export const loginRequest = async (
             dataRequest
         );
         return { data };
-    } catch (error) {
-        const axiosErrors = axios.isAxiosError(error);
+    } catch (error: any) {
         return {
-            error: axiosErrors
-                ? error?.response?.data?.message || error.message
-                : error,
+            error: error?.response?.data?.message,
         };
     }
 };
@@ -34,12 +31,9 @@ export const currentUserRequest = async (
             { headers: { Authorization: token } }
         );
         return { data };
-    } catch (error) {
-        const axiosErrors = axios.isAxiosError(error);
+    } catch (error: any) {
         return {
-            error: axiosErrors
-                ? error?.response?.data?.message || error.message
-                : error,
+            error: error?.response?.data?.message,
         };
     }
 };
@@ -53,13 +47,9 @@ export const registerRequest = async (
             dataRequest
         );
         return { data };
-    } catch (error) {
-        const axiosErrors = axios.isAxiosError(error);
-        console.log('errorq', error.response);
+    } catch (error: any) {
         return {
-            error: axiosErrors
-                ? error?.response?.data?.message || error.message
-                : error,
+            error: error?.response?.data?.message || error.message,
         };
     }
 };

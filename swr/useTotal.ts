@@ -2,21 +2,23 @@ import useSWR from 'swr';
 import { totalData } from '../interfaces/total';
 import { totalFetcher } from '../requests/total';
 import { SHORT } from '../constants/time';
+import UseToken from '../hooks/useToken';
 
-interface propsTypes {
-    token: string;
-}
-
-export default function UseTotal(props: propsTypes) {
-    const { token } = props;
+export default function UseTotal() {
+    const { token } = UseToken();
 
     const {
         data: total,
         mutate: setTotal,
         error,
-    } = useSWR<totalData>(['/api/data/totals', token], totalFetcher, {
-        refreshInterval: SHORT,
-    });
+    } = useSWR<totalData>(
+        token ? '/api/data/totals' : null,
+        (url) => totalFetcher(url, token),
+        {
+            refreshInterval: SHORT,
+        }
+    );
+    console.log(total, error?.response?.data?.message);
 
     // render data
     return {

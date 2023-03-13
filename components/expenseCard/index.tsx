@@ -23,11 +23,15 @@ export default function ExpenseCard(props: propsTypes) {
             {showIcons && (
                 <View style={[styles.cardOption]}>
                     <TouchableOpacity onPress={edit}>
-                        <FontAwesomeIcon icon={faPencil} />
+                        <Text>
+                            <FontAwesomeIcon icon={faPencil} />
+                        </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={onDelete}>
+            <Text>
                         <FontAwesomeIcon icon={faTrash} />
+            </Text>
                     </TouchableOpacity>
                 </View>
             )}

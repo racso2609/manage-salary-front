@@ -1,16 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { View, Text } from './components/styledComponents';
-import ThemeSelector from './components/ThemeSelector';
+import { View } from './components/styledComponents';
 import ThemeProvider from './context/theme';
+import Router from './router';
+import 'react-native-gesture-handler';
+import AuthProvider from './context/auth';
 
 export default function App() {
     return (
         <ThemeProvider>
-            <View flex={1} alignItems="center" justifyContent="center">
-                <Text>Open up App.tsx to start working on your app!</Text>
-                <ThemeSelector />
-                <StatusBar style="auto" />
-            </View>
+            <AuthProvider>
+                <Router />
+            </AuthProvider>
         </ThemeProvider>
     );
 }

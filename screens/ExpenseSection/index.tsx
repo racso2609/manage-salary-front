@@ -11,18 +11,17 @@ import {
     View,
 } from '../../components/styledComponents';
 import useToken from '../../hooks/useToken';
-import { categoryInterface } from '../../interfaces/categories';
 import { expenseInterface } from '../../interfaces/expenses';
 import { createType, RootStackParamList } from '../../navigation/Stack';
 import { deleteExpense } from '../../requests/expense';
-import UseCategories from '../../swr/useCategories';
-import UseExpenses from '../../swr/useExpenses';
+import useCategories from '../../swr/useCategories';
+import useExpenses from '../../swr/useExpenses';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 const Expense: FC<Props> = ({ navigation }) => {
     const { token } = useToken();
-    const { expenses, isLoading, isError } = UseExpenses({ token });
-    const { categories } = UseCategories({ token });
+    const { expenses, isLoading, isError } = useExpenses();
+    const { categories } = useCategories();
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
     const onSelectCategory = (categoryId: string) => {

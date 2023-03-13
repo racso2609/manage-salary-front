@@ -4,22 +4,6 @@ import { getEntriesResponse, getEntryResponse } from '../interfaces/entries';
 import notify from '../utils/notify';
 import { API_URL } from '../constants';
 
-export const entriesFetcher = async (url: string, token: string) => {
-    const { data }: { data: getEntriesResponse } = await axios.get(
-        `${API_URL}${url}`,
-        { headers: { Authorization: token } }
-    );
-    return data.entries;
-};
-
-export const entryFetcher = async (url: string, token: string) => {
-    const { data }: { data: getEntryResponse } = await axios.get(
-        `${API_URL}${url}`,
-        { headers: { Authorization: token } }
-    );
-    return data.entry;
-};
-
 interface IupdateEntry {
     data?: {
         description: string;

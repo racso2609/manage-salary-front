@@ -1,22 +1,23 @@
 import useSWR from 'swr';
-import { expenseFetcher } from '../requests/expense';
+import useToken from '../hooks/useToken';
 import { expenseInterface } from '../interfaces/expenses';
+import { fetcherWithToken } from '../utils/fetcher';
 
 interface propsTypes {
-    token: string;
     expenseId?: string;
 }
 
-export default function UseExpense(props: propsTypes) {
-    const { token, expenseId } = props;
+export default function useExpense(props: propsTypes) {
+    const { expenseId } = props;
+    const { token } = useToken();
 
     const {
         data: expense,
         mutate: setExpense,
         error,
     } = useSWR<expenseInterface>(
-        expenseId ? [`/api/expenses/${expenseId}`, token] : '',
-        expenseFetcher
+        expenseId ? `/api/expenses/${expenseId}` : null,
+        (url) => fetcherWithToken(url, token, 'expense')
     );
 
     // render data

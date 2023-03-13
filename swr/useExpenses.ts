@@ -1,11 +1,11 @@
 import useSWR from 'swr';
-import { expensesFetcher } from '../requests/expense';
 import { expenseInterface } from '../interfaces/expenses';
 import { SHORT } from '../constants/time';
-import UseToken from '../hooks/useToken';
+import useToken from '../hooks/useToken';
+import { fetcherWithToken } from '../utils/fetcher';
 
-export default function UseExpenses() {
-    const { token } = UseToken();
+export default function useExpenses() {
+    const { token } = useToken();
 
     const {
         data: expenses,
@@ -13,12 +13,11 @@ export default function UseExpenses() {
         error,
     } = useSWR<expenseInterface[]>(
         token ? '/api/expenses/' : null,
-        (url) => expensesFetcher(url, token),
+        (url) => fetcherWithToken(url, token),
         {
             refreshInterval: SHORT,
         }
     );
-    console.log(expenses, error, error?.response?.data?.message, 'expense');
 
     // render data
     return {

@@ -5,7 +5,7 @@ interface propsType {
     default?: string;
 }
 
-export default function UseForms(props: propsType) {
+export default function useForms(props: propsType) {
     const { type } = props;
     const [defaultValue, setDefaultValue] = useState<string>(
         props.default || ''

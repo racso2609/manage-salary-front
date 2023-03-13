@@ -1,31 +1,28 @@
 import useSWR from 'swr';
-import { categoriesFetcher } from '../requests/categories';
 import { categoryInterface } from '../interfaces/categories';
 import { LONG } from '../constants/time';
+import useToken from '../hooks/useToken';
+import { fetcherWithToken } from '../utils/fetcher';
 
-interface propsTypes {
-    token: string;
-}
-
-export default function UseCategories(props: propsTypes) {
-    const { token } = props;
+export default function useCategories() {
+    const { token } = useToken();
 
     const {
-        data: categories,
+        data: response,
         mutate: setCategories,
         error,
     } = useSWR<categoryInterface[]>(
-        [`/api/categories`, token],
-        categoriesFetcher,
+        token ? `/api/categories` : null,
+        (url) => fetcherWithToken(url, token, 'categories'),
         {
             refreshInterval: LONG,
         }
     );
 
     return {
-        categories,
+        categories: response,
         setCategories,
         isError: error,
-        isLoading: !error && !categories,
+        isLoading: !error && !response,
     };
 }

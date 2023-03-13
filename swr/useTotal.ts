@@ -1,11 +1,11 @@
 import useSWR from 'swr';
 import { totalData } from '../interfaces/total';
-import { totalFetcher } from '../requests/total';
 import { SHORT } from '../constants/time';
-import UseToken from '../hooks/useToken';
+import useToken from '../hooks/useToken';
+import { fetcherWithToken } from '../utils/fetcher';
 
-export default function UseTotal() {
-    const { token } = UseToken();
+export default function useTotal() {
+    const { token } = useToken();
 
     const {
         data: total,
@@ -13,12 +13,11 @@ export default function UseTotal() {
         error,
     } = useSWR<totalData>(
         token ? '/api/data/totals' : null,
-        (url) => totalFetcher(url, token),
+        (url) => fetcherWithToken(url, token),
         {
             refreshInterval: SHORT,
         }
     );
-    console.log(total, error?.response?.data?.message);
 
     // render data
     return {

@@ -1,22 +1,23 @@
 import useSWR from 'swr';
-import { entryFetcher } from '../requests/entries';
+import useToken from '../hooks/useToken';
 import { entryInterface } from '../interfaces/entries';
+import { fetcherWithToken } from '../utils/fetcher';
 
 interface propsTypes {
-    token: string;
     entryId?: string;
 }
 
-export default function UseEntry(props: propsTypes) {
-    const { token, entryId } = props;
+export default function useEntry(props: propsTypes) {
+    const { entryId } = props;
+    const { token } = useToken();
 
     const {
         data: entry,
         mutate: setEntry,
         error,
     } = useSWR<entryInterface>(
-        entryId ? [`/api/entries/${entryId}`, token] : '',
-        entryFetcher
+        entryId ? `/api/entries/${entryId}` : null,
+        (url) => fetcherWithToken(url, token, 'entry')
     );
 
     // render data

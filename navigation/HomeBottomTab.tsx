@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { Text } from '../components/styledComponents';
 export type TabParamList = {
     Info: undefined;
+    Entries: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();

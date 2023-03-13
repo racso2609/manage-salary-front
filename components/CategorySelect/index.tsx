@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import SelectInput from '../SelectInput';
-import UseForms from '../../hooks/useForms';
-import useToken from '../../hooks/useToken';
-import UseCategories from '../../swr/useCategories';
+import useForms from '../../hooks/useForms';
+import useCategories from '../../swr/useCategories';
 import { childrenProps } from '../../types';
 import { categoryInterface } from '../../interfaces/categories';
 import { StyleSheet, View } from 'react-native';
@@ -16,9 +15,8 @@ interface propsTypes extends childrenProps {
 }
 
 const CategorySelect: FC<propsTypes> = ({ value, categoryName }) => {
-    const { token } = useToken();
-    const internalValue = UseForms({ type: 'text', default: categoryName });
-    const { categories } = UseCategories({ token });
+    const internalValue = useForms({ type: 'text', default: categoryName });
+    const { categories } = useCategories();
     const showPanel = categories && categories?.length > 0 ? true : false;
     const onHandleSelect = (category: categoryInterface) => {
         value.onChangeText(category._id);
@@ -49,7 +47,7 @@ const CategorySelect: FC<propsTypes> = ({ value, categoryName }) => {
                                     }}
                                 >
                                     <Text>{category.name}</Text>
-                                  </TouchableOpacity>
+                                </TouchableOpacity>
                             );
                         })}
                 </View>

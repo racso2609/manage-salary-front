@@ -6,7 +6,7 @@ import {
     Button,
     TextInput,
 } from '../../components/styledComponents';
-import UseForms from '../../hooks/useForms';
+import useForms from '../../hooks/useForms';
 import useToken from '../../hooks/useToken';
 import useCategories from '../../swr/useCategories';
 import { createEntry, updateEntries } from '../../requests/entries';
@@ -43,11 +43,11 @@ export default function ({ route }: Props) {
         categories,
         // isLoading: isLoadingCategories,
         // isError: isErrorCategories,
-    } = useCategories({ token });
+    } = useCategories();
 
     const editableObject = entry || expense;
 
-    const category = UseForms({
+    const category = useForms({
         type: 'text',
         default:
             // @ts-ignore
@@ -57,15 +57,15 @@ export default function ({ route }: Props) {
                   editableObject.category,
     });
 
-    const amount = UseForms({
+    const amount = useForms({
         type: 'text',
         default: editableObject?.amount?.toString(),
     });
-    const description = UseForms({
+    const description = useForms({
         type: 'text',
         default: editableObject?.description,
     });
-    const name = UseForms({
+    const name = useForms({
         type: 'text',
         default: type === createType.ENTRY ? entry?.name : '',
     });

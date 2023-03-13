@@ -7,22 +7,6 @@ import {
 import notify from '../utils/notify';
 import { API_URL } from '../constants';
 
-export const expensesFetcher = async (url: string, token: string) => {
-    const { data }: { data: getExpensesResponse } = await axios.get(
-        `${API_URL}${url}`,
-        { headers: { Authorization: token } }
-    );
-    return data.expends;
-};
-
-export const expenseFetcher = async (url: string, token: string) => {
-    const { data }: { data: getExpenseResponse } = await axios.get(
-        `${API_URL}${url}`,
-        { headers: { Authorization: token } }
-    );
-    return data.expense;
-};
-
 interface IupdateExpense {
     data?: {
         description: string;

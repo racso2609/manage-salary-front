@@ -8,14 +8,12 @@ import {
     View,
     Button,
 } from '../../components/styledComponents';
-import useToken from '../../hooks/useToken';
 import { createType, RootStackParamList } from '../../navigation/Stack';
-import UseEntries from '../../swr/useEntries';
+import useEntries from '../../swr/useEntries';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 const Entries: FC<Props> = ({ navigation }) => {
-    const { token } = useToken();
-    const { entries, isLoading, isError } = UseEntries({ token });
+    const { entries, isLoading, isError } = useEntries();
 
     return (
         <View style={[styles.container]}>

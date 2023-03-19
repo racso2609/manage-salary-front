@@ -4,8 +4,8 @@ import useForms from '../../hooks/useForms';
 import useCategories from '../../swr/useCategories';
 import { childrenProps } from '../../types';
 import { categoryInterface } from '../../interfaces/categories';
-import { StyleSheet, View } from 'react-native';
-import { Text, TouchableOpacity } from '../styledComponents';
+import { StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, View } from '../styledComponents';
 interface propsTypes extends childrenProps {
     value: {
         defaultValue: string;

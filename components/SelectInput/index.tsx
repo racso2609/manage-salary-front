@@ -22,7 +22,7 @@ const SelectInput: FC<propsTypes> = ({ internalValue, children, show }) => {
     const showPanel = isFocus && show;
 
     return (
-        <View >
+        <View>
             <TextInput onFocus={onFocus} onBlur={onBlur} {...internalValue} />
             {showPanel && (
                 <View>

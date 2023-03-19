@@ -4,8 +4,8 @@ import {
 } from '@react-navigation/bottom-tabs';
 
 import Home from '../screens/Home';
-// import Expense from '../screens/ExpenseSection';
-// import Entries from '../screens/EntrySection';
+import Expense from '../screens/ExpenseSection';
+import Entry from '../screens/EntrySection';
 
 import {
     faHome,
@@ -14,9 +14,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { Text } from '../components/styledComponents';
+import { RootStackLoggedParamList } from './LoggedStack';
+import { NavigatorScreenParams } from '@react-navigation/native';
+import useColor from '../hooks/useColors';
 export type TabParamList = {
-    Info: undefined;
-    Entries: undefined;
+    Info: NavigatorScreenParams<RootStackLoggedParamList>;
+    Entry: NavigatorScreenParams<RootStackLoggedParamList>;
+    Expense: NavigatorScreenParams<RootStackLoggedParamList>;
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -26,6 +30,7 @@ type iconKeys = 'Expense' | 'Info' | 'Entry'; // create some types to define the
 type iconsList = { [key in iconKeys]: IconDefinition };
 
 export default function TabNavigator() {
+    const { colors } = useColor();
     const options = ({
         route,
     }: {
@@ -34,7 +39,7 @@ export default function TabNavigator() {
         return {
             headerShown: false,
             tabBarStyle: {
-                // backgroundColor: colors.background,
+                backgroundColor: colors.bg,
                 // borderColor: colors.border,
             },
             tabBarIcon: ({
@@ -69,8 +74,8 @@ export default function TabNavigator() {
     return (
         <Navigator screenOptions={options}>
             <Tab.Screen name="Info" component={Home} />
-            {/* <Tab.Screen name="Entry" component={Entries} /> */}
-            {/* <Tab.Screen name="Expense" component={Expense} /> */}
+            <Tab.Screen name="Entry" component={Entry} />
+            <Tab.Screen name="Expense" component={Expense} />
         </Navigator>
     );
 }

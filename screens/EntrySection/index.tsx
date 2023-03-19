@@ -1,4 +1,7 @@
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import EntryCard from '../../components/entryCard';
@@ -8,10 +11,18 @@ import {
     View,
     Button,
 } from '../../components/styledComponents';
-import { createType, RootStackParamList } from '../../navigation/Stack';
+import { TabParamList } from '../../navigation/HomeBottomTab';
+import {
+    createType,
+    RootStackLoggedParamList,
+} from '../../navigation/LoggedStack';
 import useEntries from '../../swr/useEntries';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type Props = CompositeScreenProps<
+    BottomTabScreenProps<TabParamList, 'Entry'>,
+    StackScreenProps<RootStackLoggedParamList>
+>;
+
 const Entries: FC<Props> = ({ navigation }) => {
     const { entries, isLoading, isError } = useEntries();
 

@@ -3,14 +3,21 @@ import { StyleSheet } from 'react-native';
 import useEntries from '../../swr/useEntries';
 import useExpenses from '../../swr/useExpenses';
 import EntryCard from '../../components/entryCard';
-import { RootStackParamList, createType } from '../../navigation/Stack';
+import { createType } from '../../navigation/LoggedStack';
 
 import ExpenseCard from '../../components/expenseCard';
 import useTotal from '../../swr/useTotal';
 import { TotalHeader } from './TotalHeader';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { RootStackLoggedParamList } from '../../navigation/LoggedStack';
+import { StackScreenProps } from '@react-navigation/stack';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { TabParamList } from '../../navigation/HomeBottomTab';
 
-type Props = BottomTabScreenProps<RootStackParamList, 'Home'>;
+type Props = CompositeScreenProps<
+    BottomTabScreenProps<TabParamList, 'Info'>,
+    StackScreenProps<RootStackLoggedParamList>
+>;
 
 export default function Home({ navigation }: Props) {
     const {
@@ -24,6 +31,7 @@ export default function Home({ navigation }: Props) {
         isError: isErrorExpenses,
     } = useExpenses();
     const { total } = useTotal();
+    console.log(total);
 
     return (
         <View style={styles.container}>

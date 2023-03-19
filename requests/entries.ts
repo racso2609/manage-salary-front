@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getEntriesResponse, getEntryResponse } from '../interfaces/entries';
+// import { getEntriesResponse, getEntryResponse } from '../interfaces/entries';
 import notify from '../utils/notify';
 import { API_URL } from '../constants';
 
@@ -22,11 +22,11 @@ export const updateEntries = async ({
         await axios.put(`${API_URL}/api/entries/${entryId}`, data, {
             headers: { Authorization: token },
         });
-    } catch (error) {
+    } catch (error: any) {
         notify.send({
             type: 'error',
             title: 'error updating entrie',
-            message: error.message,
+            message: error?.response?.data?.message,
         });
     }
 };
@@ -39,11 +39,11 @@ export const createEntry = async ({
         await axios.post(`${API_URL}/api/entries`, data, {
             headers: { Authorization: token },
         });
-    } catch (error) {
+    } catch (error: any) {
         notify.send({
             type: 'error',
             title: 'error creating entry',
-            message: error.message,
+            message: error?.response?.data?.message,
         });
     }
 };
@@ -64,11 +64,11 @@ export const deleteEntry = async ({
             title: 'Entry deleted',
             message: '',
         });
-    } catch (error) {
+    } catch (error: any) {
         notify.send({
             type: 'error',
             title: 'error deleting entry',
-            message: error.message,
+            message: error?.response?.data?.message,
         });
     }
 };

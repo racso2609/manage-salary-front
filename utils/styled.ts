@@ -7,7 +7,7 @@ export const properties: any = {
     fontSize: 'font-size',
     display: 'display',
     border: 'border',
-  flex: 'flex',
+    flex: 'flex',
 
     alignItems: 'align-items',
     justifyContent: 'justify-content',

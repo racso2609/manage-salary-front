@@ -1,4 +1,7 @@
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import CategoryTag from '../../components/CategoryTag';
@@ -12,12 +15,19 @@ import {
 } from '../../components/styledComponents';
 import useToken from '../../hooks/useToken';
 import { expenseInterface } from '../../interfaces/expenses';
-import { createType, RootStackParamList } from '../../navigation/Stack';
+import { TabParamList } from '../../navigation/HomeBottomTab';
+import {
+    createType,
+    RootStackLoggedParamList,
+} from '../../navigation/LoggedStack';
 import { deleteExpense } from '../../requests/expense';
 import useCategories from '../../swr/useCategories';
 import useExpenses from '../../swr/useExpenses';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+type Props = CompositeScreenProps<
+    BottomTabScreenProps<TabParamList, 'Expense'>,
+    StackScreenProps<RootStackLoggedParamList>
+>;
 const Expense: FC<Props> = ({ navigation }) => {
     const { token } = useToken();
     const { expenses, isLoading, isError } = useExpenses();

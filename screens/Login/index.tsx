@@ -9,7 +9,7 @@ import {
 } from '../../components/styledComponents';
 import useForms from '../../hooks/useForms';
 import { AuthContext } from '../../context/auth';
-import { RootStackParamList } from '../../navigation/Stack';
+import { RootStackParamList } from '../../navigation/UnLoggedStack';
 import { StackScreenProps } from '@react-navigation/stack';
 
 type PropsType = StackScreenProps<RootStackParamList, 'Login'>;

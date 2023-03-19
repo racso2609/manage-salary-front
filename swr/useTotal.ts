@@ -18,6 +18,7 @@ export default function useTotal() {
             refreshInterval: SHORT,
         }
     );
+    console.log(total);
 
     // render data
     return {

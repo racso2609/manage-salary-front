@@ -25,11 +25,11 @@ export const updateExpense = async ({
         await axios.put(`${API_URL}/api/expenses/${expenseId}`, data, {
             headers: { Authorization: token },
         });
-    } catch (error) {
+    } catch (error: any) {
         notify.send({
             type: 'error',
             title: 'error updating entrie',
-            message: error.message,
+            message: error?.response?.data?.message,
         });
     }
 };
@@ -48,11 +48,11 @@ export const createExpense = async ({
             message: '',
         });
         return { success: true };
-    } catch (error) {
+    } catch (error: any) {
         notify.send({
             type: 'error',
             title: 'error creating expense',
-            message: error.message,
+            message: error?.response?.data?.message,
         });
     }
 };
@@ -73,11 +73,11 @@ export const deleteExpense = async ({
             title: 'Expense deleted',
             message: '',
         });
-    } catch (error) {
+    } catch (error: any) {
         notify.send({
             type: 'error',
             title: 'error deleting expense',
-            message: error.message,
+            message: error?.response?.data?.message,
         });
     }
 };

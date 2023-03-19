@@ -11,11 +11,14 @@ import useToken from '../../hooks/useToken';
 import useCategories from '../../swr/useCategories';
 import { createEntry, updateEntries } from '../../requests/entries';
 import { createExpense, updateExpense } from '../../requests/expense';
-import { RootStackParamList, createType } from '../../navigation/Stack';
 
 import CategorySelect from '../../components/CategorySelect';
+import {
+    RootStackLoggedParamList,
+    createType,
+} from '../../navigation/LoggedStack';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Create'>;
+type Props = NativeStackScreenProps<RootStackLoggedParamList, 'Create'>;
 
 const styles = StyleSheet.create({
     form: {

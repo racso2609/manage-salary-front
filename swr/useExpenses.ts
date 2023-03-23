@@ -20,6 +20,7 @@ export default function useExpenses() {
     );
 
     // render data
+    console.log(expenses);
     return {
         expenses,
         setExpenses,

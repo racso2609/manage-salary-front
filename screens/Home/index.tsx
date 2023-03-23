@@ -13,6 +13,7 @@ import { RootStackLoggedParamList } from '../../navigation/LoggedStack';
 import { StackScreenProps } from '@react-navigation/stack';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { TabParamList } from '../../navigation/HomeBottomTab';
+import CardSection from './CardSections';
 
 type Props = CompositeScreenProps<
     BottomTabScreenProps<TabParamList, 'Info'>,
@@ -31,22 +32,20 @@ export default function Home({ navigation }: Props) {
         isError: isErrorExpenses,
     } = useExpenses();
     const { total } = useTotal();
-    console.log(total);
 
     return (
         <View style={styles.container}>
             <TotalHeader total={total} />
 
-            {isLoadingEntries ? (
-                <Text>...Loading</Text>
-            ) : isErrorEntries ? (
-                <Text>Error</Text>
-            ) : (
-                <View style={styles.scrollSection}>
-                    <Text style={styles.title}>Entries</Text>
+            <View style={styles.scrollSection}>
+                <Text style={styles.title}>Entries</Text>
+                <CardSection
+                    isLoading={isLoadingEntries}
+                    error={isErrorEntries}
+                >
                     <ScrollView horizontal scrollEnabled>
                         {entries &&
-                            entries.map((entry) => {
+                            entries?.map((entry) => {
                                 return (
                                     <EntryCard
                                         key={entry._id}
@@ -62,19 +61,16 @@ export default function Home({ navigation }: Props) {
                                 );
                             })}
                     </ScrollView>
-                </View>
-            )}
-            {isLoadingExpenses ? (
-                <Text>...Loading</Text>
-            ) : isErrorExpenses ? (
-                <Text>Error</Text>
-            ) : (
-                <View style={styles.scrollSection}>
-                    <Text style={styles.title}>Expenses</Text>
+                </CardSection>
+            </View>
+            <View style={styles.scrollSection}>
+                <Text style={styles.title}>Expenses</Text>
+                <CardSection
+                    isLoading={isLoadingExpenses}
+                    error={isErrorExpenses}
+                >
                     <ScrollView horizontal scrollEnabled>
-                        {!expenses?.length ? (
-                            <Text>Not expenses</Text>
-                        ) : (
+                        {expenses &&
                             expenses.map((expense) => {
                                 return (
                                     <ExpenseCard
@@ -88,11 +84,10 @@ export default function Home({ navigation }: Props) {
                                         expense={expense}
                                     />
                                 );
-                            })
-                        )}
+                            })}
                     </ScrollView>
-                </View>
-            )}
+                </CardSection>
+            </View>
         </View>
     );
 }

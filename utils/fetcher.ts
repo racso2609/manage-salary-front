@@ -18,7 +18,7 @@ export const fetcherWithToken = (
         headers: { Authorization: token },
     })
         .then((r) => {
-            if (fieldName) r.data[fieldName];
+            if (fieldName) return r.data[fieldName];
             return r.data;
         })
         .catch((e) => {

@@ -70,8 +70,8 @@ export default function Home({ navigation }: Props) {
                     error={isErrorExpenses}
                 >
                     <ScrollView horizontal scrollEnabled>
-                        {expenses &&
-                            expenses.map((expense) => {
+                        {Array.isArray(expenses) &&
+                            expenses?.map((expense) => {
                                 return (
                                     <ExpenseCard
                                         key={expense._id}

@@ -13,14 +13,13 @@ export default function useExpenses() {
         error,
     } = useSWR<expenseInterface[]>(
         token ? '/api/expenses/' : null,
-        (url) => fetcherWithToken(url, token),
+        (url) => fetcherWithToken(url, token, 'expends'),
         {
             refreshInterval: SHORT,
         }
     );
 
     // render data
-    console.log(expenses);
     return {
         expenses,
         setExpenses,

@@ -21,7 +21,6 @@ export default function useEntry() {
 
     // render data
     //
-    console.log(entries);
     return {
         entries,
         setEntries,

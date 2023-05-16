@@ -1,6 +1,5 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
@@ -11,11 +10,13 @@ import {
     View,
     Button,
 } from '../../components/styledComponents';
+import useToken from '../../hooks/useToken';
 import { TabParamList } from '../../navigation/HomeBottomTab';
 import {
     createType,
     RootStackLoggedParamList,
 } from '../../navigation/LoggedStack';
+import { deleteEntry } from '../../requests/entries';
 import useEntries from '../../swr/useEntries';
 
 type Props = CompositeScreenProps<
@@ -25,10 +26,14 @@ type Props = CompositeScreenProps<
 
 const Entries: FC<Props> = ({ navigation }) => {
     const { entries, isLoading, isError } = useEntries();
+    const { token } = useToken();
 
     return (
         <View style={[styles.container]}>
-            <ScrollView scrollEnabled style={[styles.scrollView]}>
+            <ScrollView
+                scrollEnabled
+                contentContainerStyle={[styles.scrollView]}
+            >
                 {isLoading && <Text>...Loading</Text>}
                 {isError && <Text>...Error</Text>}
                 {entries?.map((entry) => {
@@ -38,6 +43,9 @@ const Entries: FC<Props> = ({ navigation }) => {
                                 entry={entry}
                                 width="100%"
                                 showIcons
+                                deleteEntry={() => {
+                                    deleteEntry({ token, entryId: entry._id });
+                                }}
                                 edit={() => {
                                     navigation.navigate('Create', {
                                         entry,
@@ -85,7 +93,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         width: '100%',
-        alignItems: 'center',
+        // alignItems: 'center',
     },
     cardItem: {
         marginVertical: 10,

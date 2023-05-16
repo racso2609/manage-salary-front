@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "manage-salary-front-2.0",
-    "slug": "manage-salary-front-2.0",
+    "slug": "manage_salary",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.racso2609.manage_salary"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "61e0c47d-d63a-4bc5-8fe2-d2e6dcf46229"
+      }
     }
   }
 }

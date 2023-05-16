@@ -19,7 +19,7 @@ export const fetcherWithToken = (
     })
         .then((r) => {
             if (fieldName) return r.data[fieldName];
-            console.log('response', r);
+            // console.log('response', r);
             return r.data;
         })
         .catch((e) => {

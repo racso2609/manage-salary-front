@@ -55,36 +55,44 @@ const Expense: FC<Props> = ({ navigation }) => {
 
     return (
         <View style={[styles.container]}>
+            <View height="70px">
+                <ScrollView
+                    scrollEnabled
+                    horizontal
+                    style={[{ marginVertical: 10 }]}
+                    height="100%"
+                >
+                    {categories?.map((category) => {
+                        return (
+                            category.name && (
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        onSelectCategory(category._id)
+                                    }
+                                    style={[{ marginHorizontal: 10 }]}
+                                    key={category?._id}
+                                >
+                                    <CategoryTag
+                                        category={category}
+                                        active={selectedCategories.includes(
+                                            category._id
+                                        )}
+                                    />
+                                </TouchableOpacity>
+                            )
+                        );
+                    })}
+                    <CategoryTag
+                        category={{ _id: '1', name: '+' }}
+                        fontSize="15"
+                        color="purple"
+                    />
+                </ScrollView>
+            </View>
             <ScrollView
                 scrollEnabled
-                horizontal
-                style={[{ marginVertical: 10, height: 30 }]}
+                contentContainerStyle={[styles.scrollView]}
             >
-                {categories?.map((category) => {
-                    return (
-                        category.name && (
-                            <TouchableOpacity
-                                onPress={() => onSelectCategory(category._id)}
-                                style={[{ marginHorizontal: 10 }]}
-                                key={category?._id}
-                            >
-                                <CategoryTag
-                                    category={category}
-                                    active={selectedCategories.includes(
-                                        category._id
-                                    )}
-                                />
-                            </TouchableOpacity>
-                        )
-                    );
-                })}
-                <CategoryTag
-                    category={{ _id: '1', name: '+' }}
-                    fontSize="15"
-                    color="purple"
-                />
-            </ScrollView>
-            <ScrollView scrollEnabled style={[styles.scrollView]}>
                 {isLoading && <Text>...Loading</Text>}
                 {isError && <Text>...Error</Text>}
                 {expenses?.filter(categoriesFilter)?.map((expense) => {

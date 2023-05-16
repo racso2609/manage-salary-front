@@ -8,11 +8,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 interface propsTypes {
     entry: entryInterface;
     edit: () => void;
+    deleteEntry: () => void;
     width?: string | number;
     showIcons?: boolean;
 }
 export default function EntryCard(props: propsTypes) {
-    const { entry, edit, showIcons } = props;
+    const { entry, edit, showIcons, deleteEntry } = props;
 
     return (
         <View style={[styles.card, { width: props.width }]}>
@@ -27,7 +28,7 @@ export default function EntryCard(props: propsTypes) {
                         </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={edit}>
+                    <TouchableOpacity onPress={deleteEntry}>
                         <Text>
                             <FontAwesomeIcon icon={faTrash} />
                         </Text>

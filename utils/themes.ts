@@ -6,16 +6,16 @@ interface theme {
     ph: string;
 }
 const defaultTheme: theme = {
-    bg: 'white',
-    fg: 'black',
-    bg2: '#abdb2',
+    bg: '#fff',
+    fg: '#000',
+    bg2: '#e0e0e0',
     hover: 'blue',
     ph: 'red',
 };
 const darkTheme: theme = {
     bg: '#000',
     fg: '#fff',
-    bg2: 'gray',
+    bg2: '#838584',
     hover: 'blue',
     ph: '#282828',
 };

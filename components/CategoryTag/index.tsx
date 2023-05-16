@@ -10,14 +10,13 @@ interface propsType {
 }
 const CategoryTag: FC<propsType> = ({ category, color, fontSize, active }) => {
     return (
-        <View style={[styles.tagContainer]}>
+        <View style={[styles.tagContainer]} background="bg2">
             <Text style={[styles.textContainer]}>{category.name}</Text>
         </View>
     );
 };
 const styles = StyleSheet.create({
     tagContainer: {
-        // backgroundColor: active ? colors.active : colors.card,
         borderRadius: 10,
         paddingHorizontal: 10,
         paddingVertical: 5,

@@ -7,34 +7,49 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 interface propsTypes {
     entry: entryInterface;
-    edit: () => void;
-    deleteEntry: () => void;
+    edit?: () => void;
+    deleteEntry?: () => void;
     width?: string | number;
     showIcons?: boolean;
-marginVertical?: number;
-marginHorizontal?: number;
+    marginVertical?: number;
+    marginHorizontal?: number;
 }
 export default function EntryCard(props: propsTypes) {
-    const { entry, edit, showIcons, deleteEntry, marginHorizontal, marginVertical } = props;
+    const {
+        entry,
+        edit,
+        showIcons,
+        deleteEntry,
+        marginHorizontal,
+        marginVertical,
+    } = props;
 
     return (
-        <View style={[styles.card, { width: props.width, marginVertical, marginHorizontal }]}>
+        <View
+            style={[
+                styles.card,
+                { width: props.width, marginVertical, marginHorizontal },
+            ]}
+        >
             <Text numberOfLines={1}>{entry.name}</Text>
             <Text numberOfLines={1}>{entry.description}</Text>
             <Text numberOfLines={1}>{entry.amount}</Text>
             {showIcons && (
                 <View style={[styles.cardOption]}>
-                    <TouchableOpacity onPress={edit}>
-                        <Text>
-                            <FontAwesomeIcon icon={faPencil} color="blue" />
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={deleteEntry}>
-                        <Text>
-                            <FontAwesomeIcon icon={faTrash} />
-                        </Text>
-                    </TouchableOpacity>
+                    {edit && (
+                        <TouchableOpacity onPress={edit}>
+                            <Text>
+                                <FontAwesomeIcon icon={faPencil} color="blue" />
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+                    {deleteEntry && (
+                        <TouchableOpacity onPress={deleteEntry}>
+                            <Text>
+                                <FontAwesomeIcon icon={faTrash} />
+                            </Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
             )}
         </View>

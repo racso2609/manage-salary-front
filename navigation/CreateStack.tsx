@@ -2,22 +2,21 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 //------ Screens ------
 import Create from '../screens/Create';
-import Home from './HomeBottomTab';
 import { entryInterface } from '../interfaces/entries';
 import { expenseInterface } from '../interfaces/expenses';
 import ThemeSelector from '../components/ThemeSelector';
-import useColor from '../hooks/useColors';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
-export type RootStackLoggedParamList = {
-    Home: undefined;
+export type EntriesStackParamList = {
+    Info: NavigatorScreenParams<undefined>;
     Create: {
         entry?: entryInterface;
-        expense?: expenseInterface;
+        expense: expenseInterface;
         type: createType;
     };
 };
 
-const DefaultStack = createStackNavigator<RootStackLoggedParamList>();
+const DefaultStack = createStackNavigator<EntriesStackParamList>();
 const Stack = DefaultStack.Navigator;
 const StackScreen = DefaultStack.Screen;
 
@@ -26,8 +25,11 @@ export enum createType {
     ENTRY = 'ENTRY',
 }
 
-export default function LoggedStackRoutes() {
-    const { colors } = useColor();
+interface propsType {
+    component: any;
+}
+
+export default function LoggedStackRoutes({ component }: propsType) {
     const options = () => {
         return {
             headerStyle: {
@@ -39,8 +41,8 @@ export default function LoggedStackRoutes() {
         };
     };
     return (
-        <Stack initialRouteName="Home">
-            <StackScreen name="Home" component={Home} options={options} />
+        <Stack initialRouteName="Info">
+            <StackScreen name="Info" component={component} options={options} />
             <StackScreen name="Create" component={Create} options={options} />
         </Stack>
     );

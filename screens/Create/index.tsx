@@ -14,11 +14,10 @@ import { createExpense, updateExpense } from '../../requests/expense';
 
 import CategorySelect from '../../components/CategorySelect';
 import {
-    RootStackLoggedParamList,
     createType,
-} from '../../navigation/LoggedStack';
-
-type Props = NativeStackScreenProps<RootStackLoggedParamList, 'Create'>;
+    EntriesStackParamList,
+} from '../../navigation/CreateStack';
+type Props = NativeStackScreenProps<EntriesStackParamList, 'Create'>;
 
 const styles = StyleSheet.create({
     form: {

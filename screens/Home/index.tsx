@@ -3,24 +3,13 @@ import { StyleSheet } from 'react-native';
 import useEntries from '../../swr/useEntries';
 import useExpenses from '../../swr/useExpenses';
 import EntryCard from '../../components/entryCard';
-import { createType } from '../../navigation/LoggedStack';
 
 import ExpenseCard from '../../components/expenseCard';
 import useTotal from '../../swr/useTotal';
 import { TotalHeader } from './TotalHeader';
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { RootStackLoggedParamList } from '../../navigation/LoggedStack';
-import { StackScreenProps } from '@react-navigation/stack';
-import { CompositeScreenProps } from '@react-navigation/native';
-import { TabParamList } from '../../navigation/HomeBottomTab';
 import CardSection from './CardSections';
 
-type Props = CompositeScreenProps<
-    BottomTabScreenProps<TabParamList, 'Info'>,
-    StackScreenProps<RootStackLoggedParamList>
->;
-
-export default function Home({ navigation }: Props) {
+export default function Home() {
     const {
         entries,
         isLoading: isLoadingEntries,
@@ -41,23 +30,13 @@ export default function Home({ navigation }: Props) {
                 <Text style={styles.title}>Entries</Text>
                 <CardSection
                     isLoading={isLoadingEntries}
-                    error={isErrorEntries}
+                    error={isErrorEntries ? 'Error' : ''}
                 >
                     <ScrollView horizontal scrollEnabled>
                         {entries &&
                             entries?.map((entry) => {
                                 return (
-                                    <EntryCard
-                                        key={entry._id}
-                                        edit={() => {
-                                            navigation.navigate('Create', {
-                                                entry: entry,
-
-                                                type: createType.ENTRY,
-                                            });
-                                        }}
-                                        entry={entry}
-                                    />
+                                    <EntryCard key={entry._id} entry={entry} />
                                 );
                             })}
                     </ScrollView>
@@ -67,7 +46,7 @@ export default function Home({ navigation }: Props) {
                 <Text style={styles.title}>Expenses</Text>
                 <CardSection
                     isLoading={isLoadingExpenses}
-                    error={isErrorExpenses}
+                    error={isErrorExpenses ? 'Error' : ''}
                 >
                     <ScrollView horizontal scrollEnabled>
                         {Array.isArray(expenses) &&
@@ -75,12 +54,6 @@ export default function Home({ navigation }: Props) {
                                 return (
                                     <ExpenseCard
                                         key={expense._id}
-                                        edit={() => {
-                                            navigation.navigate('Create', {
-                                                expense: expense,
-                                                type: createType.EXPENSE,
-                                            });
-                                        }}
                                         expense={expense}
                                     />
                                 );

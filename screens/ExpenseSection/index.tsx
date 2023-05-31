@@ -17,18 +17,18 @@ import {
 } from '../../components/styledComponents';
 import useToken from '../../hooks/useToken';
 import { categoryInterface } from '../../interfaces/categories';
-import { TabParamList } from '../../navigation/HomeBottomTab';
+import { TabParamList } from '../../navigation/LoggedRouter';
 import {
     createType,
-    RootStackLoggedParamList,
-} from '../../navigation/LoggedStack';
+    EntriesStackParamList,
+} from '../../navigation/CreateStack';
 import { deleteExpense } from '../../requests/expense';
 import useCategories from '../../swr/useCategories';
 import useExpenses from '../../swr/useExpenses';
 
 type Props = CompositeScreenProps<
-    BottomTabScreenProps<TabParamList, 'Expense'>,
-    StackScreenProps<RootStackLoggedParamList>
+    BottomTabScreenProps<TabParamList, 'Expenses'>,
+    StackScreenProps<EntriesStackParamList>
 >;
 const Expense: FC<Props> = ({ navigation }) => {
     const { token } = useToken();

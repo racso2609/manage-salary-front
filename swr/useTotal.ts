@@ -26,10 +26,10 @@ export default function useTotal({ decimals }: propsType) {
     // render data
     return {
         total: {
-            totalExpenses: total.totalExpenses.toFixed(decimals),
-            totalEntries: total.totalEntries.toFixed(decimals),
-            total: total.total.toFixed(decimals),
-        },
+            totalExpenses: Number(total.totalExpenses.toFixed(decimals)),
+            totalEntries: Number(total.totalEntries.toFixed(decimals)),
+            total: Number(total.total.toFixed(decimals)),
+        } as totalData,
         setTotal,
         isError: error,
         isLoading: !error && !total,

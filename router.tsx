@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import UnLoggedStackRoutes from './navigation/UnLoggedStack';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { AuthContext } from './context/auth';
-import LoggedStackRoutes from './navigation/LoggedStack';
+import LoggedRouter from './navigation/LoggedRouter';
 
 export default function Router() {
     const { auth } = useContext(AuthContext);
@@ -11,7 +11,7 @@ export default function Router() {
         <RootSiblingParent>
             <NavigationContainer>
                 {!auth && <UnLoggedStackRoutes />}
-                {auth && <LoggedStackRoutes />}
+                {auth && <LoggedRouter />}
             </NavigationContainer>
         </RootSiblingParent>
     );

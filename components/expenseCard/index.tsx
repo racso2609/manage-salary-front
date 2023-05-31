@@ -7,7 +7,7 @@ import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface propsTypes {
     expense: expenseInterface;
-    edit: () => void;
+    edit?: () => void;
     width?: string | number;
     onDelete?: () => void;
     showIcons?: boolean;
@@ -15,7 +15,14 @@ interface propsTypes {
     marginVertical?: string | number;
 }
 export default function ExpenseCard(props: propsTypes) {
-    const { expense, edit, showIcons, onDelete, marginHorizontal, marginVertical } = props;
+    const {
+        expense,
+        edit,
+        showIcons,
+        onDelete,
+        marginHorizontal,
+        marginVertical,
+    } = props;
 
     return (
         <View
@@ -29,17 +36,20 @@ export default function ExpenseCard(props: propsTypes) {
 
             {showIcons && (
                 <View style={[styles.cardOption]}>
-                    <TouchableOpacity onPress={edit}>
-                        <Text>
-                            <FontAwesomeIcon icon={faPencil} />
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={onDelete}>
-                        <Text>
-                            <FontAwesomeIcon icon={faTrash} />
-                        </Text>
-                    </TouchableOpacity>
+                    {edit && (
+                        <TouchableOpacity onPress={edit}>
+                            <Text>
+                                <FontAwesomeIcon icon={faPencil} />
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+                    {onDelete && (
+                        <TouchableOpacity onPress={onDelete}>
+                            <Text>
+                                <FontAwesomeIcon icon={faTrash} />
+                            </Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
             )}
         </View>

@@ -1,5 +1,3 @@
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
 import { RefreshControl, StyleSheet } from 'react-native';
@@ -14,18 +12,14 @@ import {
 } from '../../components/styledComponents';
 import useToggle from '../../hooks/useToggle';
 import useToken from '../../hooks/useToken';
-import { TabParamList } from '../../navigation/HomeBottomTab';
 import {
+    EntriesStackParamList,
     createType,
-    RootStackLoggedParamList,
-} from '../../navigation/LoggedStack';
+} from '../../navigation/CreateStack';
 import { deleteEntry } from '../../requests/entries';
 import useEntries from '../../swr/useEntries';
 
-type Props = CompositeScreenProps<
-    BottomTabScreenProps<TabParamList, 'Entry'>,
-    StackScreenProps<RootStackLoggedParamList>
->;
+type Props = StackScreenProps<EntriesStackParamList>;
 
 const Entries: FC<Props> = ({ navigation }) => {
     const {

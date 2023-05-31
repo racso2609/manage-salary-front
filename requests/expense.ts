@@ -22,7 +22,7 @@ export const updateExpense = async ({
     id: expenseId,
 }: IupdateExpense): Promise<void> => {
     try {
-        await axios.put(`${API_URL}/api/expenses/${expenseId}`, data, {
+        await axios.put(`${API_URL}/api/expenses/expense/${expenseId}`, data, {
             headers: { Authorization: token },
         });
     } catch (error: any) {
@@ -64,7 +64,7 @@ export const deleteExpense = async ({
     token: string;
 }): Promise<void> => {
     try {
-        await axios.delete(`${API_URL}/api/expenses/${expenseId}`, {
+        await axios.delete(`${API_URL}/api/expenses/expense/${expenseId}`, {
             headers: { Authorization: token },
         });
 

@@ -9,7 +9,7 @@
         "android": "expo start --android",
         "ios": "expo start --ios",
         "web": "expo start --web",
-      "build:apk:dev": "eas build -p android --profile preview"
+        "build:apk:dev": "eas build -p android --profile preview"
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.4.0",

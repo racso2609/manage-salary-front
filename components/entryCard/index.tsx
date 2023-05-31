@@ -11,12 +11,14 @@ interface propsTypes {
     deleteEntry: () => void;
     width?: string | number;
     showIcons?: boolean;
+marginVertical?: number;
+marginHorizontal?: number;
 }
 export default function EntryCard(props: propsTypes) {
-    const { entry, edit, showIcons, deleteEntry } = props;
+    const { entry, edit, showIcons, deleteEntry, marginHorizontal, marginVertical } = props;
 
     return (
-        <View style={[styles.card, { width: props.width }]}>
+        <View style={[styles.card, { width: props.width, marginVertical, marginHorizontal }]}>
             <Text numberOfLines={1}>{entry.name}</Text>
             <Text numberOfLines={1}>{entry.description}</Text>
             <Text numberOfLines={1}>{entry.amount}</Text>
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 15,
         minWidth: 225,
-        margin: 5,
+        margin: 'auto',
         borderRadius: 20,
     },
     dot: {

@@ -76,7 +76,10 @@ export function AuthProvider(props: propsTypes) {
             });
     };
     const currentUser = async () => {
-        if (!token) return;
+        if (!token) {
+            setUser(undefined);
+            return;
+        }
         const { data, error } = await currentUserRequest(token);
         if (data) {
             const newUser = {

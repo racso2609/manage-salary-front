@@ -5,7 +5,7 @@ import Register from '../screens/Register';
 import ThemeSelector from '../components/ThemeSelector';
 // import { themes } from '../utils/themes';
 import Login from '../screens/Login';
-import useColor from '../hooks/useColors';
+// import useColor from '../hooks/useColors';
 
 export type RootStackParamList = {
     Home: undefined;
@@ -18,14 +18,14 @@ const Stack = DefaultStack.Navigator;
 const StackScreen = DefaultStack.Screen;
 
 export default function UnLoggedStackRoutes() {
-    const { colors } = useColor();
+    // const { colors } = useColor();
 
     const options = () => {
         return {
-            headerStyle: {
-                backgroundColor: colors.bg2,
-            },
-            headerTintColor: colors.fg,
+            // headerStyle: {
+            // backgroundColor: colors.bg2,
+            // },
+            // headerTintColor: colors.fg,
             title: 'Manage Salary',
             headerRight: () => <ThemeSelector />,
         };

@@ -11,12 +11,19 @@ interface propsTypes {
     width?: string | number;
     onDelete?: () => void;
     showIcons?: boolean;
+    marginHorizontal?: string | number;
+    marginVertical?: string | number;
 }
 export default function ExpenseCard(props: propsTypes) {
-    const { expense, edit, showIcons, onDelete } = props;
+    const { expense, edit, showIcons, onDelete, marginHorizontal, marginVertical } = props;
 
     return (
-        <View style={[styles.card, { width: props.width }]}>
+        <View
+            style={[
+                styles.card,
+                { width: props.width, marginHorizontal, marginVertical },
+            ]}
+        >
             <Text numberOfLines={1}>{expense.description}</Text>
             <Text numberOfLines={1}>{expense.amount}</Text>
 
@@ -29,9 +36,9 @@ export default function ExpenseCard(props: propsTypes) {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={onDelete}>
-            <Text>
-                        <FontAwesomeIcon icon={faTrash} />
-            </Text>
+                        <Text>
+                            <FontAwesomeIcon icon={faTrash} />
+                        </Text>
                     </TouchableOpacity>
                 </View>
             )}
@@ -46,7 +53,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 15,
         minWidth: 225,
-        margin: 5,
+        margin: 'auto',
         borderRadius: 20,
     },
     dot: {

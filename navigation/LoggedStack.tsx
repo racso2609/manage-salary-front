@@ -31,8 +31,8 @@ export default function LoggedStackRoutes() {
     const options = () => {
         return {
             headerStyle: {
-                backgroundColor: colors.bg,
-                color: colors.fg,
+                // backgroundColor: colors.bg,
+                // color: colors.fg,
             },
             title: 'Manage Salary',
             headerRight: () => <ThemeSelector />,

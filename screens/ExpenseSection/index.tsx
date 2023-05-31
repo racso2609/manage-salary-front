@@ -1,20 +1,22 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import CategoryTag from '../../components/CategoryTag';
 import ExpenseCard from '../../components/expenseCard';
+import Spinner from '../../components/Spinner';
 import {
     Button,
     ScrollView,
     Text,
     TouchableOpacity,
     View,
+    SafeAreaView,
 } from '../../components/styledComponents';
 import useToken from '../../hooks/useToken';
-import { expenseInterface } from '../../interfaces/expenses';
+import { categoryInterface } from '../../interfaces/categories';
 import { TabParamList } from '../../navigation/HomeBottomTab';
 import {
     createType,
@@ -30,7 +32,19 @@ type Props = CompositeScreenProps<
 >;
 const Expense: FC<Props> = ({ navigation }) => {
     const { token } = useToken();
-    const { expenses, isLoading, isError } = useExpenses();
+
+    const {
+        expenses,
+        isLoading,
+        isError,
+        isEmpty,
+        page: expensesPage,
+        nextPage: expensesNextPage,
+        isReachingEnd,
+        setExpenses,
+    } = useExpenses({
+        limit: 20,
+    });
     const { categories } = useCategories();
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -47,14 +61,10 @@ const Expense: FC<Props> = ({ navigation }) => {
 
         setSelectedCategories(categoriesSelected);
     };
-    const categoriesFilter = (expense: expenseInterface) => {
-        if (!selectedCategories.length) return true;
-
-        return selectedCategories.includes(expense.category);
-    };
+    const refresh = () => setExpenses([]);
 
     return (
-        <View style={[styles.container]}>
+        <SafeAreaView style={[styles.container]}>
             <View height="70px">
                 <ScrollView
                     scrollEnabled
@@ -62,7 +72,7 @@ const Expense: FC<Props> = ({ navigation }) => {
                     style={[{ marginVertical: 10 }]}
                     height="100%"
                 >
-                    {categories?.map((category) => {
+                    {categories?.map((category: categoryInterface) => {
                         return (
                             category.name && (
                                 <TouchableOpacity
@@ -89,36 +99,49 @@ const Expense: FC<Props> = ({ navigation }) => {
                     />
                 </ScrollView>
             </View>
-            <ScrollView
-                scrollEnabled
-                contentContainerStyle={[styles.scrollView]}
-            >
-                {isLoading && <Text>...Loading</Text>}
-                {isError && <Text>...Error</Text>}
-                {expenses?.filter(categoriesFilter)?.map((expense) => {
-                    return (
-                        <View key={expense?._id} style={[styles.cardItem]}>
-                            <ExpenseCard
-                                width="100%"
-                                showIcons
-                                expense={expense}
-                                onDelete={() => {
-                                    deleteExpense({
-                                        expenseId: expense._id,
-                                        token: token,
-                                    });
-                                }}
-                                edit={() => {
-                                    navigation.navigate('Create', {
-                                        expense: expense,
-                                        type: createType.EXPENSE,
-                                    });
-                                }}
-                            />
-                        </View>
-                    );
-                })}
-            </ScrollView>
+            <TouchableOpacity onPress={refresh}>
+                <Text>refresh</Text>
+            </TouchableOpacity>
+            <Text>{expensesPage}</Text>
+            <Text>{expenses.length}</Text>
+            {isLoading && <Text>...Loading</Text>}
+            {isError && <Text>...Error</Text>}
+            {isEmpty && <Text>no expenses added</Text>}
+            {expenses.length > 0 && (
+                <FlatList
+                    horizontal={false}
+                    initialNumToRender={20}
+                    contentContainerStyle={[styles.scrollView]}
+                    onEndReached={expensesNextPage}
+                    data={expenses}
+                    renderItem={({ item: expense }) => (
+                        <ExpenseCard
+                            width="100%"
+                            marginVertical={10}
+                            showIcons
+                            expense={expense}
+                            onDelete={() => {
+                                deleteExpense({
+                                    expenseId: expense._id,
+                                    token: token,
+                                });
+                                setExpenses([]);
+                            }}
+                            edit={() => {
+                                navigation.navigate('Create', {
+                                    expense: expense,
+                                    type: createType.EXPENSE,
+                                });
+                            }}
+                        />
+                    )}
+                    ListFooterComponent={
+                        isReachingEnd || isEmpty ? null : Spinner
+                    } // Loader when loading next page.
+                    keyExtractor={(item) => item._id}
+                />
+            )}
+
             <View style={[styles.buttonContainer]}>
                 <Button
                     style={styles.buttonStyle}
@@ -130,7 +153,7 @@ const Expense: FC<Props> = ({ navigation }) => {
                     title="create expenses"
                 />
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -139,7 +162,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingBottom: 10,
         paddingHorizontal: 10,
-        width: '100%',
     },
     title: {
         fontSize: 20,
@@ -153,16 +175,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden',
     },
-    cardItem: {
-        marginVertical: 10,
-        width: '90%',
-    },
     buttonContainer: {
         width: '100%',
-        alignItems: 'center',
     },
     scrollView: {
-        alignItems: 'center',
+        alignItems: 'stretch',
+        // flex: 1,
+        paddingHorizontal: 10,
     },
 });
 

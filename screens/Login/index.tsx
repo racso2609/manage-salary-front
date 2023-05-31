@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Button,
     Text,
+    SafeAreaView,
 } from '../../components/styledComponents';
 import useForms from '../../hooks/useForms';
 import { AuthContext } from '../../context/auth';
@@ -31,7 +32,7 @@ export default function Login({ navigation }: PropsType) {
     };
 
     return (
-        <View style={[styles.container]}>
+        <SafeAreaView style={[styles.container]}>
             <StatusBar hidden={true} />
             <View style={styles.form}>
                 <TextInput
@@ -66,7 +67,7 @@ export default function Login({ navigation }: PropsType) {
                     <Text>Register</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 

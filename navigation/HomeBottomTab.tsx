@@ -39,7 +39,7 @@ export default function TabNavigator() {
         return {
             headerShown: false,
             tabBarStyle: {
-                backgroundColor: colors.bg,
+                // backgroundColor: colors.bg,
                 // borderColor: colors.border,
             },
             tabBarIcon: ({

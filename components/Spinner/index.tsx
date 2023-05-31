@@ -1,23 +1,13 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC } from 'react';
 import { Animated } from 'react-native';
 import styled from 'styled-components/native';
 import useAnimatedColor from '../../hooks/animations/useAnimatedColor';
 import useColor from '../../hooks/useColors';
 
-interface SpinnerProps {
-    color: string;
-}
-
 const SpinnerContainer = styled.View`
     width: 20px;
     height: 20px;
-`;
-
-const SpinnerCircle = styled.View<Partial<SpinnerProps>>`
-    width: 100%;
-    height: 100%;
-
-    border-radius: 20px;
+    margin: auto;
 `;
 
 const Spinner: FC = () => {
@@ -34,10 +24,12 @@ const Spinner: FC = () => {
                     Animated.timing(animation, {
                         toValue: 100,
                         duration,
+                        useNativeDriver: false,
                     }),
                     Animated.timing(animation, {
                         toValue: 0,
                         duration,
+                        useNativeDriver: false,
                     }),
                 ])
             ).start();
@@ -48,7 +40,9 @@ const Spinner: FC = () => {
         <SpinnerContainer>
             <Animated.View
                 style={{
-                    backgroundColor: backgroundColorAnimated,
+                    borderColor: backgroundColorAnimated,
+                    borderStyle: 'solid',
+                    borderWidth: 1,
                     borderRadius: 20,
                     width: '100%',
                     height: '100%',

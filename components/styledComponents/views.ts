@@ -18,6 +18,11 @@ export const View = styled.View<ContainerType>`
     ${(props: any) => addStyles(props)}
 `;
 
+export const SafeAreaView = styled.SafeAreaView<ContainerType>`
+    background-color: ${(props: any) => props.theme.bg};
+    ${(props: any) => addStyles(props)}
+`;
+
 export const ScrollView = styled.ScrollView<ContainerType>`
     background-color: ${(props: any) => props.theme.bg};
     ${(props: any) => addStyles(props)}

@@ -10,16 +10,17 @@ export const fetcher = (url: string, fieldName?: string) =>
 export const fetcherWithToken = (
     url: string,
     token: string,
-    fieldName?: string
+    fieldName?: string,
+    data?: any
 ) =>
     axios({
         url: API_URL + url,
         method: 'get',
         headers: { Authorization: token },
+        data,
     })
         .then((r) => {
             if (fieldName) return r.data[fieldName];
-            // console.log('response', r);
             return r.data;
         })
         .catch((e) => {

@@ -7,7 +7,6 @@ import LoggedStackRoutes from './navigation/LoggedStack';
 
 export default function Router() {
     const { auth } = useContext(AuthContext);
-    console.log('auth', auth);
     return (
         <RootSiblingParent>
             <NavigationContainer>

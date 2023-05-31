@@ -1,28 +1,35 @@
 import useSWR from 'swr';
 import { totalData } from '../interfaces/total';
-import { SHORT } from '../constants/time';
+import { LONG, SHORT } from '../constants/time';
 import useToken from '../hooks/useToken';
 import { fetcherWithToken } from '../utils/fetcher';
-
-export default function useTotal() {
+interface propsType {
+    decimals?: number;
+}
+export default function useTotal({ decimals }: propsType) {
     const { token } = useToken();
+    decimals = decimals ?? 2;
 
     const {
-        data: total,
+        data,
         mutate: setTotal,
         error,
     } = useSWR<totalData>(
         token ? '/api/data/totals' : null,
         (url) => fetcherWithToken(url, token),
         {
-            refreshInterval: SHORT,
+            refreshInterval: LONG,
         }
     );
-    console.log(total);
+    const total = data ?? { totalEntries: 0, totalExpenses: 0, total: 0 };
 
     // render data
     return {
-        total,
+        total: {
+            totalExpenses: total.totalExpenses.toFixed(decimals),
+            totalEntries: total.totalEntries.toFixed(decimals),
+            total: total.total.toFixed(decimals),
+        },
         setTotal,
         isError: error,
         isLoading: !error && !total,

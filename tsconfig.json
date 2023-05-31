@@ -1,6 +1,9 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true
-  }
+    "extends": "expo/tsconfig.base",
+    "compilerOptions": {
+        "strict": true,
+        "jsx": "react-native",
+        "target": "es2016",
+        "lib": ["es6", "dom", "es2017"]
+    }
 }

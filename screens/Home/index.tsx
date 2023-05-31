@@ -25,13 +25,13 @@ export default function Home({ navigation }: Props) {
         entries,
         isLoading: isLoadingEntries,
         isError: isErrorEntries,
-    } = useEntries();
+    } = useEntries({ limit: 20 });
     const {
         expenses,
         isLoading: isLoadingExpenses,
         isError: isErrorExpenses,
-    } = useExpenses();
-    const { total } = useTotal();
+    } = useExpenses({ limit: 20 });
+    const { total } = useTotal({});
 
     return (
         <View style={styles.container}>

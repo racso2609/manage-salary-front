@@ -2,14 +2,17 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { FC } from 'react';
-import { StyleSheet } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import EntryCard from '../../components/entryCard';
+import Spinner from '../../components/Spinner';
 import {
-    ScrollView,
     Text,
     View,
     Button,
+    SafeAreaView,
 } from '../../components/styledComponents';
+import useToggle from '../../hooks/useToggle';
 import useToken from '../../hooks/useToken';
 import { TabParamList } from '../../navigation/HomeBottomTab';
 import {
@@ -25,38 +28,70 @@ type Props = CompositeScreenProps<
 >;
 
 const Entries: FC<Props> = ({ navigation }) => {
-    const { entries, isLoading, isError } = useEntries();
+    const {
+        entries,
+        isLoading,
+        isError,
+        nextPage,
+        isEmpty,
+        isReachingEnd,
+        setEntries,
+    } = useEntries({
+        limit: 20,
+    });
     const { token } = useToken();
+    const refreshControl = useToggle();
+    const handleRefresh = () => {
+        refreshControl.setIsActive(true);
+        setEntries([]);
+        refreshControl.setIsActive(false);
+    };
 
     return (
-        <View style={[styles.container]}>
-            <ScrollView
-                scrollEnabled
-                contentContainerStyle={[styles.scrollView]}
-            >
-                {isLoading && <Text>...Loading</Text>}
-                {isError && <Text>...Error</Text>}
-                {entries?.map((entry) => {
-                    return (
-                        <View key={entry._id} style={[styles.cardItem]}>
-                            <EntryCard
-                                entry={entry}
-                                width="100%"
-                                showIcons
-                                deleteEntry={() => {
-                                    deleteEntry({ token, entryId: entry._id });
-                                }}
-                                edit={() => {
-                                    navigation.navigate('Create', {
-                                        entry,
-                                        type: createType.EXPENSE,
-                                    });
-                                }}
-                            />
-                        </View>
-                    );
-                })}
-            </ScrollView>
+        <SafeAreaView style={[styles.container]}>
+            <Text>{refreshControl.isActive ? 'a' : 'b'}</Text>
+            {isLoading && <Text>...Loading</Text>}
+            {isError && <Text>...Error</Text>}
+
+            {isEmpty && <Text>no entries added</Text>}
+            {!isEmpty && (
+                <FlatList
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshControl.isActive}
+                            onRefresh={handleRefresh}
+                        />
+                    }
+                    contentContainerStyle={[styles.scrollView]}
+                    onEndReached={nextPage}
+                    data={entries}
+                    horizontal={false}
+                    renderItem={({ item: entry }) => (
+                        <EntryCard
+                            entry={entry}
+                            width="100%"
+                            showIcons
+                            marginVertical={10}
+                            deleteEntry={() => {
+                                deleteEntry({
+                                    token,
+                                    entryId: entry._id,
+                                });
+                            }}
+                            edit={() => {
+                                navigation.navigate('Create', {
+                                    entry,
+                                    type: createType.EXPENSE,
+                                });
+                            }}
+                        />
+                    )}
+                    ListFooterComponent={
+                        isReachingEnd || isEmpty ? null : Spinner
+                    } // Loader when loading next page.
+                    keyExtractor={(item) => item._id}
+                />
+            )}
             <View style={[styles.buttonContainer]}>
                 <Button
                     style={styles.buttonStyle}
@@ -68,7 +103,7 @@ const Entries: FC<Props> = ({ navigation }) => {
                     title="create entry"
                 />
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -95,12 +130,9 @@ const styles = StyleSheet.create({
         width: '100%',
         // alignItems: 'center',
     },
-    cardItem: {
-        marginVertical: 10,
-        width: '90%',
-    },
     scrollView: {
-        alignItems: 'center',
+        alignItems: 'stretch',
+        paddingHorizontal: 10,
     },
 });
 

@@ -1,2 +1,2 @@
-export const SHORT = 5 * 1000;
-export const LONG = 30 * 1000;
+export const SHORT = 30 * 1000;// 60 seg
+export const LONG = 60 * 2 * 1000; // 2 min

@@ -7,7 +7,7 @@ interface theme {
 }
 const defaultTheme: theme = {
     bg: '#ffffff',
-    fg: 'black',
+    fg: '#000000',
     bg2: '#e0e0e0',
     hover: 'blue',
     ph: 'red',

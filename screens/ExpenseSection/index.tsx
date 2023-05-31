@@ -24,7 +24,7 @@ import {
 } from '../../navigation/CreateStack';
 import { deleteExpense } from '../../requests/expense';
 import useCategories from '../../swr/useCategories';
-import useExpenses from '../../swr/useExpenses';
+import useExpensesInfinity from '../../swr/useExpensesInfinity';
 
 type Props = CompositeScreenProps<
     BottomTabScreenProps<TabParamList, 'Expenses'>,
@@ -42,7 +42,7 @@ const Expense: FC<Props> = ({ navigation }) => {
         nextPage: expensesNextPage,
         isReachingEnd,
         setExpenses,
-    } = useExpenses({
+    } = useExpensesInfinity({
         limit: 20,
     });
     const { categories } = useCategories();
@@ -125,13 +125,14 @@ const Expense: FC<Props> = ({ navigation }) => {
                                     expenseId: expense._id,
                                     token: token,
                                 });
-                                setExpenses([]);
+                                refresh();
                             }}
                             edit={() => {
                                 navigation.navigate('Create', {
                                     expense: expense,
                                     type: createType.EXPENSE,
                                 });
+                                refresh();
                             }}
                         />
                     )}

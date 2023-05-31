@@ -17,7 +17,7 @@ import {
     createType,
 } from '../../navigation/CreateStack';
 import { deleteEntry } from '../../requests/entries';
-import useEntries from '../../swr/useEntries';
+import useEntriesInfinity from '../../swr/useEntriesInfinity';
 
 type Props = StackScreenProps<EntriesStackParamList>;
 
@@ -30,15 +30,13 @@ const Entries: FC<Props> = ({ navigation }) => {
         isEmpty,
         isReachingEnd,
         setEntries,
-    } = useEntries({
+    } = useEntriesInfinity({
         limit: 20,
     });
     const { token } = useToken();
     const refreshControl = useToggle();
     const handleRefresh = () => {
-        refreshControl.setIsActive(true);
         setEntries([]);
-        refreshControl.setIsActive(false);
     };
 
     return (
@@ -71,12 +69,14 @@ const Entries: FC<Props> = ({ navigation }) => {
                                     token,
                                     entryId: entry._id,
                                 });
+                                handleRefresh();
                             }}
                             edit={() => {
                                 navigation.navigate('Create', {
                                     entry,
                                     type: createType.EXPENSE,
                                 });
+                                handleRefresh();
                             }}
                         />
                     )}

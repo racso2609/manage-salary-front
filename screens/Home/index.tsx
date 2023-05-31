@@ -14,12 +14,12 @@ export default function Home() {
         entries,
         isLoading: isLoadingEntries,
         isError: isErrorEntries,
-    } = useEntries({ limit: 20 });
+} = useEntries({ page: 0,limit: 20 });
     const {
         expenses,
         isLoading: isLoadingExpenses,
         isError: isErrorExpenses,
-    } = useExpenses({ limit: 20 });
+    } = useExpenses({ page: 0, limit: 20 });
     const { total } = useTotal({});
 
     return (

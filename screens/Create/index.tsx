@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
 });
-export default function ({ route }: Props) {
+export default function ({ route, navigation }: Props) {
     const { params } = route;
     const { entry, expense, type } = params;
     const { token } = useToken();
@@ -84,6 +84,7 @@ export default function ({ route }: Props) {
         };
         if (!editableObject?._id) await create({ data, token, id: '' });
         else await update({ data, token, id: editableObject._id });
+navigation.pop()
     };
     return (
         <View style={styles.form}>

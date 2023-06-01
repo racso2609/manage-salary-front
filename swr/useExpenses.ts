@@ -11,7 +11,9 @@ export default function useExpenses({ page, limit }: propsType) {
     const { token } = useToken();
 
     const { data, mutate, error } = useSWR<expenseInterface[]>(
-token ? `/api/expenses?page=${page ?page: 1}&limit=${limit ?? 20}` : null,
+        token
+            ? `/api/expenses?page=${page ? page : 1}&limit=${limit ?? 20}`
+            : null,
         (url) => fetcherWithToken(url, token, 'expends'),
         {
             revalidateOnFocus: true,

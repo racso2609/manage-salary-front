@@ -84,7 +84,7 @@ export default function ({ route, navigation }: Props) {
         };
         if (!editableObject?._id) await create({ data, token, id: '' });
         else await update({ data, token, id: editableObject._id });
-navigation.pop()
+        navigation.pop();
     };
     return (
         <View style={styles.form}>

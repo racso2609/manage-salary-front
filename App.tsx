@@ -18,7 +18,9 @@ export default function App() {
                         initFocus(callback) {
                             let appState = AppState.currentState;
 
-                            const onAppStateChange = (nextAppState: AppStateStatus) => {
+                            const onAppStateChange = (
+                                nextAppState: AppStateStatus
+                            ) => {
                                 /* If it's resuming from background or inactive mode to active one */
                                 if (
                                     appState.match(/inactive|background/) &&

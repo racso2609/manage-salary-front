@@ -14,7 +14,7 @@ export default function Home() {
         entries,
         isLoading: isLoadingEntries,
         isError: isErrorEntries,
-} = useEntries({ page: 0,limit: 20 });
+    } = useEntries({ page: 0, limit: 20 });
     const {
         expenses,
         isLoading: isLoadingExpenses,

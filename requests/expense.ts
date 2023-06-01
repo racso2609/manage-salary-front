@@ -25,10 +25,10 @@ export const updateExpense = async ({
         await axios.put(`${API_URL}/api/expenses/expense/${expenseId}`, data, {
             headers: { Authorization: token },
         });
-notify.send({
+        notify.send({
             type: 'success',
             title: 'Expense updated',
-            message: "updated",
+            message: 'updated',
         });
     } catch (error: any) {
         notify.send({

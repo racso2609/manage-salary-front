@@ -64,12 +64,9 @@ export default function Register() {
                     icon={password.secureTextEntry ? faLock : faUnlock}
                     onPressIcon={password.toggleSecureText}
                 />
-
-                <Button
-                    style={styles.button}
-                    title="Register"
-                    onPress={handleSubmit}
-                />
+                <View style={[styles.button]}>
+                    <Button title="Register" onPress={handleSubmit} />
+                </View>
             </View>
         </View>
     );
@@ -95,6 +92,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     button: {
-        marginVertical: 10,
+        marginTop: 20,
     },
 });

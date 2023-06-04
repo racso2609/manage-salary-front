@@ -4,6 +4,7 @@ interface theme {
     bg2: string;
     hover: string;
     ph: string;
+    inactive: string;
 }
 const defaultTheme: theme = {
     bg: '#ffffff',
@@ -11,6 +12,7 @@ const defaultTheme: theme = {
     bg2: '#e0e0e0',
     hover: 'blue',
     ph: 'red',
+    inactive: 'gray',
 };
 const darkTheme: theme = {
     bg: 'black',
@@ -18,6 +20,7 @@ const darkTheme: theme = {
     bg2: '#838584',
     hover: 'blue',
     ph: '#282828',
+    inactive: 'gray',
 };
 export const themes: { default: theme; dark: theme } = {
     default: defaultTheme,

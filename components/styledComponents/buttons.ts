@@ -18,8 +18,6 @@ export const Button = styled.Button<Partial<ButtonProps>>`
 export const TouchableOpacity = styled.TouchableOpacity<Partial<ButtonProps>>`
     all: unset;
     cursor: pointer;
-    padding: 5px 30px;
-    border-radius: 20px;
     font-size: 1.2rem;
     font-weight: bold;
     color: ${(props: any) => props.theme.fg};

@@ -9,6 +9,7 @@ export interface IUser {
 export interface loginDataInterface {
     email: string;
     password: string;
+    keepLogged: boolean;
 }
 export interface loginDataResponse {
     email: string;
@@ -19,7 +20,9 @@ export interface loginDataResponse {
     Token: string;
 }
 
-export interface IRegister extends loginDataInterface {
+export interface IRegister {
+    email: string;
+    password: string;
     firstName: string;
     lastName: string;
 }

@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 import { StyleSheet, StatusBar } from 'react-native';
-import {
-    View,
-    TextInput,
-    TouchableOpacity,
-    Button,
-    Text,
-} from '../../components/styledComponents';
+import { View, Button } from '../../components/styledComponents';
 import useForms from '../../hooks/useForms';
 import { AuthContext } from '../../context/auth';
+import InputIcon from '../../components/InputIcon';
+import {
+    faEnvelope,
+    faLock,
+    faSignature,
+    faUnlock,
+    faUser,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function Register() {
     const email = useForms({ type: 'email', default: '' });
@@ -33,42 +35,41 @@ export default function Register() {
             <StatusBar hidden={true} />
             <View style={styles.form}>
                 <View style={styles.doubleForm}>
-                    <TextInput
+                    <InputIcon
                         {...firstName}
                         placeholder="first name"
-                        style={{ marginRight: 5, flexGrow: 0.9 }}
+                        style={{ flexGrow: 0.5 }}
+                        icon={faUser}
                     />
 
-                    <TextInput
+                    <InputIcon
                         {...lastName}
                         placeholder="last name"
-                        style={{ marginLeft: 5, flexGrow: 0.9 }}
+                        style={{ flexGrow: 0.5 }}
+                        icon={faSignature}
                     />
                 </View>
-                <TextInput
+                <InputIcon
                     defaultValue={email.defaultValue}
                     onChangeText={email.onChangeText}
                     placeholder="email"
+                    icon={faEnvelope}
                 />
 
-                <TextInput
+                <InputIcon
                     defaultValue={password.defaultValue}
                     onChangeText={password.onChangeText}
                     placeholder="password"
                     secureTextEntry={password.secureTextEntry}
+                    icon={password.secureTextEntry ? faLock : faUnlock}
+                    onPressIcon={password.toggleSecureText}
                 />
 
-                <TouchableOpacity
-                    onPress={password.toggleSecureText}
-                    style={{ marginBottom: 10 }}
-                >
-                    <Text>
-                        {password?.secureTextEntry ? 'Show ' : 'Hidden '}
-                        password
-                    </Text>
-                </TouchableOpacity>
-
-                <Button title="Register" onPress={handleSubmit} />
+                <Button
+                    style={styles.button}
+                    title="Register"
+                    onPress={handleSubmit}
+                />
             </View>
         </View>
     );
@@ -92,5 +93,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
+    },
+    button: {
+        marginVertical: 10,
     },
 });

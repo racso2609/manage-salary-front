@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { StyleSheet, StatusBar } from 'react-native';
 import {
     View,
-    TextInput,
     TouchableOpacity,
     Button,
     Text,
@@ -12,18 +11,28 @@ import useForms from '../../hooks/useForms';
 import { AuthContext } from '../../context/auth';
 import { RootStackParamList } from '../../navigation/UnLoggedStack';
 import { StackScreenProps } from '@react-navigation/stack';
+import InputIcon from '../../components/InputIcon';
+import useToggle from '../../hooks/useToggle';
+import {
+    faEnvelope,
+    faLock,
+    faUnlock,
+} from '@fortawesome/free-solid-svg-icons';
+import { Switch } from '../../components/styledComponents/inputs';
 
 type PropsType = StackScreenProps<RootStackParamList, 'Login'>;
 
 export default function Login({ navigation }: PropsType) {
     const email = useForms({ type: 'email', default: '' });
     const password = useForms({ type: 'password', default: '' });
+    const keepLogged = useToggle();
     const { login } = useContext(AuthContext);
     const handleSubmit = () => {
         if (login)
             login({
                 email: email.defaultValue,
                 password: password.defaultValue,
+                keepLogged: keepLogged.isActive,
             });
     };
 
@@ -35,28 +44,33 @@ export default function Login({ navigation }: PropsType) {
         <SafeAreaView style={[styles.container]}>
             <StatusBar hidden={true} />
             <View style={styles.form}>
-                <TextInput
+                <InputIcon
                     defaultValue={email.defaultValue}
                     onChangeText={email.onChangeText}
                     placeholder="email"
+                    icon={faEnvelope}
+                    autoCapitalize="none"
+                    autoComplete="email"
                 />
 
-                <TextInput
+                <InputIcon
                     defaultValue={password.defaultValue}
+                    autoCapitalize="none"
+                    autoComplete="password"
                     onChangeText={password.onChangeText}
                     placeholder="password"
                     secureTextEntry={password.secureTextEntry}
+                    icon={password.secureTextEntry ? faLock : faUnlock}
+                    onPressIcon={password.toggleSecureText}
                 />
 
-                <TouchableOpacity
-                    onPress={password.toggleSecureText}
-                    style={{ marginBottom: 10 }}
-                >
-                    <Text>
-                        {password?.secureTextEntry ? 'Show ' : 'Hidden '}
-                        password
-                    </Text>
-                </TouchableOpacity>
+                <View style={styles.keepLogged}>
+                    <Text>Keep me logged</Text>
+                    <Switch
+                        onValueChange={keepLogged.toggle}
+                        value={keepLogged.isActive}
+                    />
+                </View>
 
                 <Button title="Login" onPress={handleSubmit} />
 
@@ -83,5 +97,10 @@ const styles = StyleSheet.create({
     },
     form: {
         paddingHorizontal: 20,
+    },
+    keepLogged: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
 });

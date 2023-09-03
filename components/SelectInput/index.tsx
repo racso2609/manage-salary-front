@@ -1,7 +1,9 @@
+import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import React, { FC, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { childrenProps } from '../../types';
-import { TextInput, View, Text } from '../styledComponents';
+import Icon from '../Icon';
+import { TextInput, View } from '../styledComponents';
 
 interface propsTypes extends childrenProps {
     show: boolean;
@@ -18,16 +20,28 @@ const SelectInput: FC<propsTypes> = ({ internalValue, children, show }) => {
     const onBlur = () => {
         setFocus(false);
     };
+    const onHandleClick = () => {
+        setFocus((prev) => !prev);
+    };
 
     const showPanel = isFocus && show;
 
     return (
-        <View>
+        <View style={styles.container}>
             <TextInput onFocus={onFocus} onBlur={onBlur} {...internalValue} />
-            {showPanel && (
-                <View>
-                    <Text>{children}</Text>
-                </View>
+            {showPanel && <View style={styles.list}>{children}</View>}
+            {isFocus ? (
+                <Icon
+                    icon={faArrowUp}
+                    style={styles.icon}
+                    onPress={onHandleClick}
+                />
+            ) : (
+                <Icon
+                    icon={faArrowDown}
+                    style={styles.icon}
+                    onPress={onHandleClick}
+                />
             )}
         </View>
     );
@@ -36,11 +50,22 @@ const SelectInput: FC<propsTypes> = ({ internalValue, children, show }) => {
 const styles = StyleSheet.create({
     container: {
         position: 'relative',
-        height: 'auto',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 5,
+        paddingHorizontal: 5,
+        // borderRadius: 5,
+        // overflow: 'hidden',
     },
     list: {
-        // width: "100%",
-        // height: "100%",
+        position: 'absolute',
+        top: '100%',
+        left: -20,
+    },
+    icon: {
+        position: 'absolute',
+        right: 2,
     },
 });
 
